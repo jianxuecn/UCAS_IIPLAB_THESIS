@@ -16,7 +16,7 @@
 %---------------------------------------------------------------------------%
 %->> Declare options
 %---------------------------------------------------------------------------%
-\RequirePackage{etoolbox}% a toolbox of programming facilities
+\RequirePackage{etoolbox}% a toolbox of programming facilities, already loaded in ucasthesis.cls
 \newcommand{\artxifstreq}{\expandafter\ifstrequal\expandafter}% expansion control
 %-
 %-> Platform fontset <windows>, <mac>, <adobe>, <none>, <times>, <others>
@@ -270,33 +270,6 @@
 %-> Math packages
 %-
 \RequirePackage{amsmath,amsthm,amssymb}% math structures, theorems, and extended symbols
-\theoremstyle{plain}% for theorems, lemmas, propositions, etc
-\providecommand{\theoremname}{Theorem}%
-\newtheorem{theorem}{\theoremname}[\artxmaincnt]
-\providecommand{\axiomname}{Axiom}%
-\newtheorem{axiom}[theorem]{\axiomname}
-\providecommand{\lemmaname}{Lemma}%
-\newtheorem{lemma}[theorem]{\lemmaname}
-\providecommand{\corollaryname}{Corollary}%
-\newtheorem{corollary}[theorem]{\corollaryname}
-\providecommand{\assertionname}{Assertion}%
-\newtheorem{assertion}[theorem]{\assertionname}
-\providecommand{\propositionname}{Proposition}%
-\newtheorem{proposition}[theorem]{\propositionname}
-\providecommand{\conjecturename}{Conjecture}%
-\newtheorem{conjecture}[theorem]{\conjecturename}
-\theoremstyle{definition}% for definitions and examples
-\providecommand{\definitionname}{Definition}%
-\newtheorem{definition}{\definitionname}[\artxmaincnt]
-\providecommand{\examplename}{Example}%
-\newtheorem{example}{\examplename}[\artxmaincnt]
-\theoremstyle{remark}% for remarks and notes
-\providecommand{\remarkname}{Remark}%
-\newtheorem*{remark}{\remarkname}
-
-\ifartx@math% extra math packages
-    \RequirePackage{mathtools}% extension to amsmath
-\fi
 %-
 %-> Language settings
 %-
@@ -346,6 +319,10 @@
     %\RequirePackage[cmintegrals]{newtxmath}% times font, load after amsmath and newtxtext packages
     %\RequirePackage{mathrsfs}% enable \mathscr for script alphabet
     %\RequirePackage[cal=cm]{mathalfa}% map styles for calligraphic \mathcal and script \mathscr alphabet
+    %! Do not use xits fonts settings.
+    %! If you have to use it, be sure only set it for roman (serif) font and math roman font.
+    %! Because XITS is essentially a times font (a kind of serif fonts), it is an open source alternative to
+    %! roman (serif) fonts and does not meet the needs of other fonts, such as sans-serif and typewriter (mono) fonts.
     \IfFontExistsTF{XITS-Regular.otf}{%
     \RequirePackage{unicode-math}% unicode font configuration <XITS|STIX2>
     \def\boldsymbol#1{\symbfit{#1}}% treat obsoleteness
@@ -363,22 +340,22 @@
       BoldItalicFont = *-BoldItalic,
       Ligatures=TeX,
     ]
-    \setsansfont[NFSSFamily=entextsf]{XITS}[
-      Extension      = .otf,
-      UprightFont    = *-Regular,
-      BoldFont       = *-Bold,
-      ItalicFont     = *-Italic,
-      BoldItalicFont = *-BoldItalic,
-      Ligatures=TeX,
-    ]
-    \setmonofont[NFSSFamily=entexttt]{XITS}[
-      Extension      = .otf,
-      UprightFont    = *-Regular,
-      BoldFont       = *-Bold,
-      ItalicFont     = *-Italic,
-      BoldItalicFont = *-BoldItalic,
-      Ligatures=TeX,
-    ]
+    %\setsansfont[NFSSFamily=entextsf]{XITS}[
+    %  Extension      = .otf,
+    %  UprightFont    = *-Regular,
+    %  BoldFont       = *-Bold,
+    %  ItalicFont     = *-Italic,
+    %  BoldItalicFont = *-BoldItalic,
+    %  Ligatures=TeX,
+    %]
+    %\setmonofont[NFSSFamily=entexttt]{XITS}[
+    %  Extension      = .otf,
+    %  UprightFont    = *-Regular,
+    %  BoldFont       = *-Bold,
+    %  ItalicFont     = *-Italic,
+    %  BoldItalicFont = *-BoldItalic,
+    %  Ligatures=TeX,
+    %]
     \setmathfont{XITSMath-Regular}[
       Extension    = .otf,
       BoldFont     = XITSMath-Bold,
@@ -403,18 +380,18 @@
       Ligatures=TeX,
       StylisticSet = 1,
     ]
-    \setmathsf{XITSMath-Regular}[
-      Extension    = .otf,
-      BoldFont     = XITSMath-Bold,
-      Ligatures=TeX,
-      StylisticSet = 1,
-    ]
-    \setmathtt{XITSMath-Regular}[
-      Extension    = .otf,
-      BoldFont     = XITSMath-Bold,
-      Ligatures=TeX,
-      StylisticSet = 1,
-    ]
+    %\setmathsf{XITSMath-Regular}[
+    %  Extension    = .otf,
+    %  BoldFont     = XITSMath-Bold,
+    %  Ligatures=TeX,
+    %  StylisticSet = 1,
+    %]
+    %\setmathtt{XITSMath-Regular}[
+    %  Extension    = .otf,
+    %  BoldFont     = XITSMath-Bold,
+    %  Ligatures=TeX,
+    %  StylisticSet = 1,
+    %]
     }{%
     \RequirePackage{newtxtext}% main font
     \RequirePackage[cmintegrals]{newtxmath}% times font, load after amsmath and newtxtext packages
@@ -426,6 +403,10 @@
         \setCJKmainfont{SimSun}[AutoFakeBold=2.5,ItalicFont=KaiTi]%
         \setCJKsansfont{SimHei}[AutoFakeBold=2.5]%
         \setCJKmonofont{FangSong}%
+        \setCJKfamilyfont{zhsong}{SimSun}%%
+        \setCJKfamilyfont{zhhei}{SimHei}%
+        \setCJKfamilyfont{zhkai}{KaiTi}%
+        \setCJKfamilyfont{zhfs}{FangSong}%
     \else\ifartx@mac%
         \setCJKmainfont{Songti SC}[%
             UprightFont    = * Light,
@@ -435,15 +416,23 @@
         ]
         \setCJKsansfont{Heiti SC}[BoldFont = * Medium]%
         \setCJKmonofont{STFangsong}%
+        \setCJKfamilyfont{zhsong}{Songti SC}%
+        \setCJKfamilyfont{zhhei}{Heiti SC}%
+        \setCJKfamilyfont{zhkai}{Kaiti SC}%
+        \setCJKfamilyfont{zhfs}{STFangsong}%
     \else\ifartx@adobe% call font from system font library
         \setCJKmainfont{AdobeSongStd-Light}[%
             AutoFakeBold=2.5,
             ItalicFont=AdobeKaitiStd-Regular,
-        ]
+        ]%
         \setCJKsansfont{AdobeHeitiStd-Regular}[%
             AutoFakeBold=2.5,
         ]%
         \setCJKmonofont{AdobeFangsongStd-Regular}%
+        \setCJKfamilyfont{zhsong}{AdobeSongStd-Light}%
+        \setCJKfamilyfont{zhhei}{AdobeHeitiStd-Regular}%
+        \setCJKfamilyfont{zhkai}{AdobeKaitiStd-Regular}%
+        \setCJKfamilyfont{zhfs}{AdobeFangsongStd-Regular}%
     \else\ifartx@none% call font from local fontdir
     %- Without path: i) if font specified by a string without extension, fontspec will
     %- treat the given string as font name and use system fontconfig to search the font name
@@ -452,22 +441,84 @@
     %- LaTeX distribution
     %- With path: fontspec will treat the given string as font filename and use kpathsea to
     %- search the font filename in path, and extension is optional but recommended in this case
-        \setCJKmainfont{AdobeSongStd-Light}[%
+        \setCJKmainfont{SourceHanSerifSC}[%
             Path=\artx@fontdir,
             Extension=.otf,
-            AutoFakeBold=2.5,
+            UprightFont=*-Regular,
+            %AutoFakeBold=2.5,
+            BoldFont=*-Bold,
             ItalicFont=AdobeKaitiStd-Regular,
-        ]
-        \setCJKsansfont{AdobeHeitiStd-Regular}[%
+        ]%
+        \setCJKsansfont{SourceHanSansSC}[%
             Path=\artx@fontdir,
             Extension=.otf,
-            AutoFakeBold=2.5,
+            UprightFont=*-Regular,
+            %AutoFakeBold=2.5,
+            BoldFont=*-Bold,
         ]%
         \setCJKmonofont{AdobeFangsongStd-Regular}[%
             Path=\artx@fontdir,
             Extension=.otf,
-        ]
+        ]%
+        \setCJKfamilyfont{zhsong}{SourceHanSerifSC-Regular.otf}[Path=\artx@fontdir]%
+        \setCJKfamilyfont{zhhei}{SourceHanSansSC-Regular.otf}[Path=\artx@fontdir]%
+        \setCJKfamilyfont{zhkai}{AdobeKaitiStd-Regular.otf}[Path=\artx@fontdir]%
+        \setCJKfamilyfont{zhfs}{AdobeFangsongStd-Regular.otf}[Path=\artx@fontdir]%
     \fi\fi\fi\fi
+    \providecommand*{\songti}{\CJKfamily{zhsong}} % 宋体
+    \providecommand*{\heiti}{\CJKfamily{zhhei}}   % 黑体
+    \providecommand*{\kaishu}{\CJKfamily{zhkai}}  % 楷书
+    \providecommand*{\fangsong}{\CJKfamily{zhfs}} % 仿宋
+\fi
+%-
+%-> Math settings
+%-
+%\RequirePackage{setspace}
+\newtheoremstyle{iiplstyle}%              % Name
+  {}%                                     % Space above
+  {}%                                     % Space below
+  {\linespread{1.35}\selectfont}%                                     % Body font
+  {}%                                     % Indent amount
+  {\bf}%                                  % Theorem head font
+  {}%                                    % Punctuation after theorem head
+  {1em}%                                    % Space after theorem head, ' ', or \newline
+  {}%                                     % Theorem head spec (can be left empty, meaning `normal')
+\theoremstyle{iiplstyle}% for theorems, lemmas, propositions, etc
+\providecommand{\theoremname}{Theorem}%
+\newtheorem{theorem}{\theoremname}[\artxmaincnt]
+\providecommand{\axiomname}{Axiom}%
+\newtheorem{axiom}[theorem]{\axiomname}
+\providecommand{\lemmaname}{Lemma}%
+\newtheorem{lemma}[theorem]{\lemmaname}
+\providecommand{\corollaryname}{Corollary}%
+\newtheorem{corollary}[theorem]{\corollaryname}
+\providecommand{\assertionname}{Assertion}%
+\newtheorem{assertion}[theorem]{\assertionname}
+\providecommand{\propositionname}{Proposition}%
+\newtheorem{proposition}[theorem]{\propositionname}
+\providecommand{\conjecturename}{Conjecture}%
+\newtheorem{conjecture}[theorem]{\conjecturename}
+%\theoremstyle{definition}% for definitions and examples
+\providecommand{\definitionname}{Definition}%
+\newtheorem{definition}{\definitionname}[\artxmaincnt]
+\providecommand{\examplename}{Example}%
+\newtheorem{example}{\examplename}[\artxmaincnt]
+\theoremstyle{remark}% for remarks and notes
+\providecommand{\remarkname}{Remark}%
+\newtheorem*{remark}{\remarkname}
+
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \linespread{1.35}\normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+  \item\relax
+      {\bfseries #1\@addpunct{:}}\hspace\labelsep\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+
+\ifartx@math% extra math packages
+    \RequirePackage{mathtools}% extension to amsmath
 \fi
 %-
 %-> Bibliography processor and package
@@ -548,15 +599,30 @@
 %-
 \RequirePackage{graphicx}% packages for including graphics
 \RequirePackage[format=plain,hangindent=2.0em,font={small,bf},skip=8pt,labelsep=space]{caption}% options: [margin=10pt,labelfont=bf]
+
 \RequirePackage{subcaption}% package for subfigures
+%- change subfigure reference to the style: 1(a)
+\captionsetup[subfigure]{labelformat=simple}
+\renewcommand\thesubfigure{(\alph{subfigure})}
+
 \RequirePackage[list=off]{bicaption}% package for binary captions
 \DeclareCaptionOption{bi-first}[]{}% 1st language
 \DeclareCaptionOption{bi-second}[]{% 2nd language
-    \def\tablename{Table}%
     \def\figurename{Figure}%
+    \def\tablename{Table}%
 }
 \captionsetup[bi-first]{bi-first}%
 \captionsetup[bi-second]{bi-second}%
+\DeclareCaptionOption{app-bi-first}[]{% 1st language
+    \def\appfigname{附图}%
+    \def\apptabname{附表}%
+}
+\DeclareCaptionOption{app-bi-second}[]{% 2nd language
+    \def\appfigname{App Figure}%
+    \def\apptabname{App Table}%
+}
+\DeclareCaptionType[fileext=loaf,within=chapter]{appfig}[\@appfigname][]
+\DeclareCaptionType[fileext=loat,within=chapter]{apptab}[\@apptabname][]
 \RequirePackage[section]{placeins}% prevent floats from being moved over section
 %-
 %-> Page layout and spacing
@@ -605,7 +671,7 @@
 %-
 \ifartx@list% enable enhanced list and verbatim structures
     \RequirePackage{verbatim}% improve verbatim environment
-    \RequirePackage{enumitem}% configure the enumerate environment
+    \RequirePackage[shortlabels]{enumitem}% configure the enumerate environment
     \setlist[enumerate]{wide=\parindent}% only indent the first line
     \setlist[itemize]{wide=\parindent}% only indent the first line
     \setlist{nosep}% default text spacing
@@ -667,17 +733,17 @@
 \ifartx@geometry% enable geometry to redefine page layout
     \geometry{paper=a4paper,left=31.7mm,right=31.7mm,top=25.4mm,bottom=25.4mm,headheight=12pt,headsep=17.5pt,footskip=10.4mm}%
 \fi
-\linespread{1.25}% 1.5 for "one and a half" line spacing, and 2.0 for "double" line spacing
+\linespread{1.35}% 1.25 for "one and a half" line spacing, and 1.6 for "double" line spacing
 %\setlength{\parskip}{0.5ex plus 0.25ex minus 0.25ex}% skip space a paragraph
 \setcounter{tocdepth}{2}% depth for the table of contents
 \setcounter{secnumdepth}{3}% depth for section numbering, default is 2(subsub)
 %- Set equation, figure, table numbering
-\numberwithin{equation}{chapter}% set enumeration level
-\renewcommand{\theequation}{\thechapter\arabic{equation}}% configure the label style
-% \numberwithin{figure}{section}% set enumeration level
-% \renewcommand{\thefigure}{\thesection\arabic{figure}}% configure the label style
-% \numberwithin{table}{section}% set enumeration level
-% \renewcommand{\thetable}{\thesection\arabic{table}}% configure the label style
+%\numberwithin{equation}{section}% set enumeration level
+%\renewcommand{\theequation}{\thesection\arabic{equation}}% configure the label style
+%\numberwithin{figure}{section}% set enumeration level
+%\renewcommand{\thefigure}{\thesection\arabic{figure}}% configure the label style
+%\numberwithin{table}{section}% set enumeration level
+%\renewcommand{\thetable}{\thesection\arabic{table}}% configure the label style
 %- Set bibliography entry
 \ifartx@bibtex%
     \setlength{\bibsep}{0.0ex plus 0.2ex minus 0.2ex}% set distance between entries
@@ -718,13 +784,12 @@
         \renewcommand{\footrulewidth}{0pt}% footer rule
     }
     \fancypagestyle{enfrontmatterstyle}{% style for frontmatter
-    \fancyhf{}% clear fields
-    \fancyhead[C]{\footnotesize \ifnumodd{\value{page}}{\leftmark}{\ucas@value@en@title}}% structure elements
-    \fancyfoot[C]{\footnotesize \thepage}% page number
-    \renewcommand{\headrulewidth}{0.8pt}% header rule
-    \renewcommand{\footrulewidth}{0pt}% footer rule
+        \fancyhf{}% clear fields
+        \fancyhead[C]{\footnotesize \ifnumodd{\value{page}}{\leftmark}{\ucas@value@en@title}}% structure elements
+        \fancyfoot[C]{\footnotesize \thepage}% page number
+        \renewcommand{\headrulewidth}{0.8pt}% header rule
+        \renewcommand{\footrulewidth}{0pt}% footer rule
     }
-
     \fancypagestyle{mainmatterstyle}{% style for mainmatter
         \fancyhf{}% clear fields
         \fancyhead[C]{\footnotesize \ifnumodd{\value{page}}{\leftmark}{\@title}}% structure elements
@@ -736,6 +801,20 @@
         \fancyhf{}% clear fields
         \fancyhead[C]{\footnotesize \ifnumodd{\value{page}}{\leftmark}{\@title}}% structure elements
         \fancyfoot[C]{\footnotesize \ifnumodd{\value{page}}{\hspace*{\fill}\thepage}{\thepage\hspace*{\fill}}}% page number
+        \renewcommand{\headrulewidth}{0.8pt}% header rule
+        \renewcommand{\footrulewidth}{0pt}% footer rule
+    }
+    \fancypagestyle{figureheader}{
+        \fancyhf{}
+        \fancyhead[C]{\footnotesize \@listfigtabphname}
+        \fancyfoot[C]{\footnotesize \thepage}% page number
+        \renewcommand{\headrulewidth}{0.8pt}% header rule
+        \renewcommand{\footrulewidth}{0pt}% footer rule
+    }    
+    \fancypagestyle{appendixheader}{
+        \fancyhf{}
+        \fancyhead[C]{\footnotesize \@appphname}
+        \fancyfoot[C]{\footnotesize \thepage}% page number
         \renewcommand{\headrulewidth}{0.8pt}% header rule
         \renewcommand{\footrulewidth}{0pt}% footer rule
     }
@@ -752,6 +831,19 @@
     \renewcommand{\mainmatter}{%
         \artxmainmatter%
         \pagestyle{mainmatterstyle}%
+    }
+    %- Redefine \appendix to include the change
+    \providecommand{\appendix}{}% compatibility for non-book classes
+    \let\artxappendix\appendix%
+    \renewcommand{\appendix}{%
+        \artxappendix%
+        \pagestyle{appendixheader}%
+        \renewcommand\thechapter{\arabic{chapter}} 
+        \renewcommand{\theequation}{附\thechapter-\arabic{equation}}% configure the label style
+        \renewcommand{\theappfig}{\thechapter-\arabic{appfig}}% configure the label style
+        \renewcommand{\theapptab}{\thechapter-\arabic{apptab}}% configure the label style
+        \captionsetup[bi-first]{app-bi-first}%
+        \captionsetup[bi-second]{app-bi-second}%
     }
     %- Redefine \backmatter to include the change
     \providecommand{\backmatter}{}% compatibility for non-book classes
@@ -828,31 +920,42 @@
     \definecolor{artxgreen}{rgb}{0,0.6,0}
     \definecolor{artxgray}{rgb}{0.5,0.5,0.5}
     \definecolor{artxmauve}{rgb}{0.58,0,0.82}
+    \lstloadlanguages{C++}
     \lstset{%
+        language=C++,% set default language to C++
         numberbychapter=false,% numbered sequentially or by chapter
-        backgroundcolor=\color{white},% background color;
-        basicstyle=\scriptsize,% font size for code
+        backgroundcolor=\color{white},% background color;\color[gray]{0.95},
+        basicstyle=\linespread{1.1}\small\ttfamily,% font size for code
         breakatwhitespace=false,% sets if automatic breaks should only happen at whitespace
+        breakautoindent=true,
+        breakindent=2em,
         breaklines=true,% sets automatic line breaking
         captionpos=b,% caption-position to bottom
         commentstyle=\color{artxgreen},% comment style
+        escapeinside={/*@}{@*/},
+        extendedchars=false,
         %deletekeywords={...},% delete keywords from the given language
+        flexiblecolumns=true,
         frame=single,% adds a frame around the code
         keepspaces=true,% keeps spaces in text for keeping indentation of code
         keywordstyle=\color{blue},% keyword style
         %otherkeywords={*,...},% add more keywords to the set
         numbers=left,% where to put the line-numbers; possible values are (none, left, right)
         numbersep=5pt,% how far the line-numbers are from the code
-        numberstyle=\tiny\color{artxgray},% the style that is used for the line-numbers
+        numberstyle=\scriptsize\color{artxgray},% the style that is used for the line-numbers
         rulecolor=\color{black},% if not set, the frame-color may be changed on line-breaks
         showspaces=false,% show spaces everywhere adding particular underscores;
         showstringspaces=false,% underline spaces within strings only
         showtabs=false,% show tabs within strings adding particular underscores
-        stepnumber=2,% the step between two line-numbers. If it's 1, each line will be numbered
+        stepnumber=1,% the step between two line-numbers. If it's 1, each line will be numbered
         stringstyle=\color{artxmauve},% string literal style
         tabsize=2,% sets default tabsize to 2 spaces
-        title=\lstname% show the filename of files
+        title=\lstname,% show the filename of files
+        xleftmargin=2em,
+        xrightmargin=2em,
     }
+    \renewcommand*{\lstlistingname}{\progname}% Listing -> Program
+    \renewcommand*{\lstlistlistingname}{\listprogname}% List of Listings -> List of Programs
 \fi
 %-
 %-> Page background
@@ -861,7 +964,6 @@
     \definecolor{backgroundcolor}{rgb}{0.85,0.85,0.85}%
     \pagecolor{backgroundcolor}% background color
 \fi
-
 %---------------------------------------------------------------------------%
 \endinput
 

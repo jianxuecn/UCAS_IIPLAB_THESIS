@@ -130,7 +130,7 @@
 %- specifies the amount of space between paragraphs.
 \setlength{\parskip}{0.5ex plus 0.25ex minus 0.25ex}
 %- line spacing
-\linespread{1.6}% line space setting
+\linespread{1.35}% line space setting
 \raggedbottom% prevent adding vertical white space in strange places
 %- default pagestyle is page number at bottom without headers and footers
 \pagestyle{plain}
@@ -561,11 +561,15 @@
     \def\listappfigname{}
     \def\listtablename{\ucas@label@en@lstabname}
     \def\listapptabname{}
+    \def\@listfigtabphname{\ucas@label@en@lsfigtabphname}
+    \def\@appfigname{\ucas@label@en@appfigname}
+    \def\@apptabname{\ucas@label@en@apptabname}
     \def\bibname{\ucas@label@en@bibname}
     \def\refname{\ucas@label@en@bibname}
     \def\algname{\ucas@label@en@algname}
     \def\bibetal{\ucas@label@en@bibetal}
     \def\biband{\ucas@label@en@biband}
+    \def\@appphname{\ucas@label@en@appphname}
     \def\axiomname{\ucas@label@en@axiomname}
     \def\theoremname{\ucas@label@en@theoremname}
     \def\lemmaname{\ucas@label@en@lemmaname}
@@ -579,17 +583,23 @@
     \def\proofname{\ucas@label@en@proofname}
     \def\@title{\ucas@value@en@titlemark}
     \def\@author{\ucas@value@en@author}
+    \def\progname{\ucas@label@en@progname}
+    \def\listprogname{\ucas@label@en@listprogname}
 \else
     \def\contentsname{\ucas@label@ch@tocname}
     \def\listfigurename{\ucas@label@ch@lsfigname}
     \def\listappfigname{}
     \def\listtablename{\ucas@label@ch@lstabname}
     \def\listapptabname{}
+    \def\@listfigtabphname{\ucas@label@ch@lsfigtabphname}
+    \def\@appfigname{\ucas@label@ch@appfigname}
+    \def\@apptabname{\ucas@label@ch@apptabname}
     \def\algname{\ucas@label@ch@algname}
     \def\bibname{\ucas@label@ch@bibname}
     \def\refname{\ucas@label@ch@bibname}
     \def\bibetal{\ucas@label@ch@bibetal}
     \def\biband{\ucas@label@ch@biband}
+    \def\@appphname{\ucas@label@ch@appphname}
     \def\axiomname{\ucas@label@ch@axiomname}
     \def\theoremname{\ucas@label@ch@theoremname}
     \def\lemmaname{\ucas@label@ch@lemmaname}
@@ -603,6 +613,8 @@
     \def\proofname{\ucas@label@ch@proofname}
     \def\@title{\ucas@value@ch@titlemark}
     \def\@author{\ucas@value@ch@author}
+    \def\progname{\ucas@label@ch@progname}
+    \def\listprogname{\ucas@label@ch@listprogname}
 \fi
 %---------------------------------------------------------------------------%
 %->> Structure layout
@@ -655,7 +667,7 @@
 \ctexset {
     appendix = {
         numbering = true,
-        number = \rmfamily\zhnum{chapter},
+        number = \sffamily\zhnum{chapter},%\sffamily\bfseries\chinese{chapter},
     }
 }
 %---------------------------------------------------------------------------%
@@ -742,4 +754,3 @@
 \renewcommand*\l@table{\@dottedtocline{1}{1em}{1.8em}}
 %---------------------------------------------------------------------------%
 \endinput
-
