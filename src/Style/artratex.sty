@@ -441,6 +441,29 @@
     %- LaTeX distribution
     %- With path: fontspec will treat the given string as font filename and use kpathsea to
     %- search the font filename in path, and extension is optional but recommended in this case
+        \newCJKfontfamily[zhsong]\songti{SourceHanSerifSC}[%
+            Path=\artx@fontdir,
+            Extension=.otf,
+            UprightFont=*-Regular,
+            %AutoFakeBold=2.5,
+            BoldFont=*-Bold,
+            ItalicFont=AdobeKaitiStd-Regular,
+        ]%
+        \newCJKfontfamily[zhhei]\heiti{SourceHanSansSC}[%
+            Path=\artx@fontdir,
+            Extension=.otf,
+            UprightFont=*-Regular,
+            %AutoFakeBold=2.5,
+            BoldFont=*-Bold,
+        ]%
+        \newCJKfontfamily[zhkai]\kaishu{AdobeKaitiStd-Regular}[%
+            Path=\artx@fontdir,
+            Extension=.otf,
+        ]%
+        \newCJKfontfamily[zhfs]\fangsong{AdobeFangsongStd-Regular}[%
+            Path=\artx@fontdir,
+            Extension=.otf,
+        ]%
         \setCJKmainfont{SourceHanSerifSC}[%
             Path=\artx@fontdir,
             Extension=.otf,
@@ -460,15 +483,7 @@
             Path=\artx@fontdir,
             Extension=.otf,
         ]%
-        \setCJKfamilyfont{zhsong}{SourceHanSerifSC-Regular.otf}[Path=\artx@fontdir]%
-        \setCJKfamilyfont{zhhei}{SourceHanSansSC-Regular.otf}[Path=\artx@fontdir]%
-        \setCJKfamilyfont{zhkai}{AdobeKaitiStd-Regular.otf}[Path=\artx@fontdir]%
-        \setCJKfamilyfont{zhfs}{AdobeFangsongStd-Regular.otf}[Path=\artx@fontdir]%
     \fi\fi\fi\fi
-    \providecommand*{\songti}{\CJKfamily{zhsong}} % 宋体
-    \providecommand*{\heiti}{\CJKfamily{zhhei}}   % 黑体
-    \providecommand*{\kaishu}{\CJKfamily{zhkai}}  % 楷书
-    \providecommand*{\fangsong}{\CJKfamily{zhfs}} % 仿宋
 \fi
 %-
 %-> Math settings
@@ -614,8 +629,8 @@
 \captionsetup[bi-first]{bi-first}%
 \captionsetup[bi-second]{bi-second}%
 \DeclareCaptionOption{app-bi-first}[]{% 1st language
-    \def\appfigname{附图}%
-    \def\apptabname{附表}%
+    \def\appfigname{\@appfigname}%
+    \def\apptabname{\@apptabname}%
 }
 \DeclareCaptionOption{app-bi-second}[]{% 2nd language
     \def\appfigname{App Figure}%
@@ -677,7 +692,7 @@
     \setlist{nosep}% default text spacing
     \RequirePackage{listings}% source code
     \RequirePackage{algpseudocode,algorithm,algorithmicx}% algorithm
-    \providecommand{\algname}{Algorithm}%
+    %\providecommand{\algname}{Algorithm}%
     \def\ALG@name{\algname}% rename label
 \fi
 %-
@@ -737,13 +752,17 @@
 %\setlength{\parskip}{0.5ex plus 0.25ex minus 0.25ex}% skip space a paragraph
 \setcounter{tocdepth}{2}% depth for the table of contents
 \setcounter{secnumdepth}{3}% depth for section numbering, default is 2(subsub)
-%- Set equation, figure, table numbering
+%- Set equation, figure, table, algorithm numbering
 %\numberwithin{equation}{section}% set enumeration level
 %\renewcommand{\theequation}{\thesection\arabic{equation}}% configure the label style
 %\numberwithin{figure}{section}% set enumeration level
 %\renewcommand{\thefigure}{\thesection\arabic{figure}}% configure the label style
 %\numberwithin{table}{section}% set enumeration level
 %\renewcommand{\thetable}{\thesection\arabic{table}}% configure the label style
+\renewcommand{\theequation}{\thechapter-\arabic{equation}}% configure the equation numbering style
+\renewcommand{\thefigure}{\thechapter-\arabic{figure}}% configure the figure numbering style
+\renewcommand{\thetable}{\thechapter-\arabic{table}}% configure the table numbering style
+\renewcommand{\thealgorithm}{\thechapter-\arabic{algorithm}}% configure the algorithm numbering style
 %- Set bibliography entry
 \ifartx@bibtex%
     \setlength{\bibsep}{0.0ex plus 0.2ex minus 0.2ex}% set distance between entries
@@ -839,7 +858,7 @@
         \artxappendix%
         \pagestyle{appendixheader}%
         \renewcommand\thechapter{\arabic{chapter}} 
-        \renewcommand{\theequation}{附\thechapter-\arabic{equation}}% configure the label style
+        \renewcommand{\theequation}{\@appname\thechapter-\arabic{equation}}% configure the label style
         \renewcommand{\theappfig}{\thechapter-\arabic{appfig}}% configure the label style
         \renewcommand{\theapptab}{\thechapter-\arabic{apptab}}% configure the label style
         \captionsetup[bi-first]{app-bi-first}%
@@ -966,4 +985,3 @@
 \fi
 %---------------------------------------------------------------------------%
 \endinput
-

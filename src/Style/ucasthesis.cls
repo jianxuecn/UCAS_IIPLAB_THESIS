@@ -298,11 +298,11 @@
 
         \vspace*{\stretch{2}}
 
-        {\zihao{1}\bfseries\sffamily {\ucas@label@ch@thesis}}
+        {\zihao{1}\sffamily\bfseries {\ucas@label@ch@thesis}}
 
         \vspace*{\stretch{3}}
 
-        {\zihao{-3}\bfseries\sffamily \ulenhance[1.5pt]{\ucas@value@ch@title}}
+        {\zihao{-3}\heiti\bfseries \ulenhance[1.5pt]{\ucas@value@ch@title}}
 
         \vspace*{\stretch{3}}
 
@@ -561,6 +561,7 @@
     \def\listappfigname{}
     \def\listtablename{\ucas@label@en@lstabname}
     \def\listapptabname{}
+    \def\@appname{\ucas@label@en@appname}
     \def\@listfigtabphname{\ucas@label@en@lsfigtabphname}
     \def\@appfigname{\ucas@label@en@appfigname}
     \def\@apptabname{\ucas@label@en@apptabname}
@@ -591,6 +592,7 @@
     \def\listappfigname{}
     \def\listtablename{\ucas@label@ch@lstabname}
     \def\listapptabname{}
+    \def\@appname{\ucas@label@ch@appname}
     \def\@listfigtabphname{\ucas@label@ch@lsfigtabphname}
     \def\@appfigname{\ucas@label@ch@appfigname}
     \def\@apptabname{\ucas@label@ch@apptabname}
@@ -622,7 +624,7 @@
 %- chapter
 \ctexset {
     chapter = {
-        format = \linespread{1.0}\zihao{4}\bfseries\sffamily\centering,
+        format = \linespread{1.0}\zihao{4}\heiti\bfseries\centering,
         nameformat = {},
         titleformat = {},
         number = \arabic{chapter},
@@ -636,7 +638,7 @@
 %- section
 \ctexset {
     section = {
-        format = \linespread{1.0}\zihao{-4}\sffamily\raggedright,
+        format = \linespread{1.0}\zihao{-4}\heiti\raggedright,
         numberformat = \rmfamily,
         aftername = \quad,
         beforeskip = {24pt},
@@ -646,7 +648,7 @@
 %- subsection
 \ctexset {
     subsection = {
-        format = \linespread{1.0}\zihao{-4}\sffamily\raggedright,
+        format = \linespread{1.0}\zihao{-4}\heiti\raggedright,
         numberformat = \rmfamily,
         aftername = \quad,
         beforeskip = {12pt},
@@ -656,7 +658,7 @@
 %- subsubsection
 \ctexset {
     subsubsection = {
-        format = \linespread{1.0}\zihao{-4}\sffamily\raggedright,
+        format = \linespread{1.0}\zihao{-4}\heiti\raggedright,
         numberformat = \rmfamily,
         aftername = \quad,
         beforeskip = {12pt},
@@ -667,7 +669,7 @@
 \ctexset {
     appendix = {
         numbering = true,
-        number = \sffamily\zhnum{chapter},%\sffamily\bfseries\chinese{chapter},
+        number = \heiti\zhnum{chapter},%\sffamily\bfseries\chinese{chapter},
     }
 }
 %---------------------------------------------------------------------------%
@@ -696,7 +698,7 @@
         {\leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
         \parindent #2\relax\@afterindenttrue
         \interlinepenalty\@M
-        \leavevmode \zihao{-4}\sffamily
+        \leavevmode \zihao{-4}\heiti
         \@tempdima #3\relax
         \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
         {#4}\nobreak
@@ -716,7 +718,7 @@
             \parindent \z@ \rightskip \@pnumwidth
             \parfillskip -\@pnumwidth
             {\leavevmode
-            \zihao{4}\sffamily #1
+            \zihao{4}\heiti #1
             \leaders\hbox{$\m@th\mkern \@dotsep \cdot\mkern \@dotsep$}% add dotted toc line
             \hfil \hb@xt@\@pnumwidth{\hss #2}}\par
             \nobreak
@@ -734,7 +736,7 @@
         \begingroup
             \parindent \z@ \rightskip \@pnumwidth
             \parfillskip -\@pnumwidth
-            \leavevmode \zihao{4}\sffamily
+            \leavevmode \zihao{4}\heiti
             \advance\leftskip\@tempdima
             \hskip -\leftskip
             #1\nobreak

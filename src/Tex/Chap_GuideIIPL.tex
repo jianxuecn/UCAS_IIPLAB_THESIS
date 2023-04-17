@@ -9,7 +9,7 @@
 \newcommand*{\figref}[1]{图~\ref{#1}~}
 \newcommand*{\secref}[1]{~\ref{#1}~节}
 \newcommand*{\tabref}[1]{表~\ref{#1}~}
-%\newcommand*{\algref}[1]{算法~\ref{#1}~}
+\newcommand*{\algoref}[1]{算法~\ref{#1}~}
 \newcommand*{\codref}[1]{程序~\ref{#1}~}
 \newcommand*{\thmref}[1]{定理~\ref{#1}~}
 \newcommand*{\axmref}[1]{公理~\ref{#1}~}
@@ -27,7 +27,7 @@
 %\subsection{字体}
 在基础模板关于英文字体和数学字体的设置中，若发现系统中存在开源的XITS字体（XITS-Regular.otf，一般会包含在几大主流 \LaTeX{} 发行版中），
 则会将所有英文字体都设置为XITS，这是一种不好的做法。因为XITS字体作为英文衬线字体（serif font）和数学字体的一种开源替代品，本身只是一种times字体，
-原模板强行将英文非衬线字体（sans-serif font）、等宽（mono）或打字机（typewrite）字体
+原模板强行将英文非衬线字体（\textsf{sans-serif font}）、等宽（\texttt{mono}）或打字机（\texttt{typewrite}）字体
 都设置成XITS这种times字体，这显然不符合英文排版基本规则。而且用times字体排版那些需要使用等宽字体的内容（典型的如计算机代码等）既不美观又不利于阅读。
 因此，此处建议对其进行调整。最简单的做法是直接停用XITS字体，将artratex.sty文件中的“XITS-Regular.otf”改成“NoXITS-Regular.otf”，
 使得 \LaTeX{} 找不到该文件而使相关设置失效。如果不得不用XITS字体，则至少在artratex.sty文件中将设置英文非衬线字体和等宽字体的部分注释掉。
@@ -97,9 +97,21 @@
 
 
 \subsection{数学公式}
-段落内的数学公式，有三种输入方式：$E=mc^2$、\(\frac{1}{2}\sqrt{b^2-4ac}\)、\begin{math}\mathbf{n}=[x, y, z]^T\end{math}。
+段落内的数学公式，有三种输入方式：
+\begin{itemize}
+\item \verb|$ ... $|，如：$E=mc^2$
+\item \verb|\( ... \)|，如：\(\frac{1}{2}\sqrt{b^2-4ac}\)
+\item \verb|\begin{math} ... \end{math}|，如：\begin{math}\mathbf{n}=[x, y, z]^T\end{math}
+\end{itemize}
 
 段落间的数学公式也有对应的三种输入方式：
+\begin{itemize}
+\item \verb|$$ ... $$|
+\item \verb|\[ ... \]|
+\item \verb|\begin{displaymath} ... \end{displaymath}|
+\end{itemize}
+
+示例如下：
 % (1)
 $$A=\int_0^1 \frac{\ln{x}}{x}\dif x$$
 % (2)
@@ -155,8 +167,9 @@ h&=i+j\label{eq:samples:grp:c}
 \begin{equation}
 z = \left\{
 \begin{array}{ll}
-1 & (x>0)\\
-0 & (x<0)
+ 1 & (x>0)\\
+ 0 & (x=0)\\
+-1 & (x<0)
 \end{array}
 \right.
 \end{equation}
@@ -240,12 +253,12 @@ z = \left\{
 \begin{figure}[htbp]
 \def\figwidth{\columnwidth}
   \centering
-    \begin{subfigure}[b]{0.5\figwidth} %子图宽度（用相对于整个figure的比例指定）
+    \begin{subfigure}[b]{0.58\figwidth} %子图宽度（用相对于整个figure的比例指定）
       \centering
       \includegraphics[width=\textwidth]{blockclassify}
       \caption{块体类型}\label{fig:samples:blockclassify}
     \end{subfigure} %此处可以用“\\”换行
-    \begin{subfigure}[b]{0.36\figwidth}
+    \begin{subfigure}[b]{0.4\figwidth}
       \centering
       \includegraphics[width=\textwidth]{blockclassify1}
       \caption{平面示意图}\label{fig:samples:blockclassify1}
@@ -253,14 +266,42 @@ z = \left\{
   \bicaption{块体分类}{Block classification}\label{fig:samples:blcfy}
 \end{figure}
 
+对于较宽的插图，可以使用“\ltxenvname{landscape}”环境按横排方式进行排版，如\figref{fig:samples:lsblcfy}所示。
+\textbf{注意：}由于横排的情况下整页只有一个插图，\ltxenvname{figure}环境的位置参数一般设置为“\texttt{p}”，以保证插图纵向居中摆放。
+另外，由于\ltxenvname{landscape}本身不是浮动对象，所以很可能在一页内容未排满之前遇到一个\ltxenvname{landscape}页而必须重新开始新的一页，
+导致当前页提前结束排版而出现大量不必要的空白，针对此问题，可使用“\ltxenvname{afterpage}”宏包提供的“\ltxcmdname{afterpage}”命令
+将\ltxenvname{landscape}页推迟到当前页排满后再开始。该命令并非$100\%$可靠，若排版结果仍然不理想，则需要进一步手工调整。
+
+\afterpage{
+%% 整页横排的插图
+\begin{landscape}% 横排页环境
+\pagestyle{lscape}% 横排页眉页脚样式
+\begin{figure}[p]% 位置参数设置为p使得整个插图纵向居中
+\def\figwidth{\columnwidth}
+  \centering
+    \begin{subfigure}[b]{0.5\figwidth} %子图宽度（用相对于整个figure的比例指定）
+      \centering
+      \includegraphics[width=\textwidth]{blockclassify}
+      \caption{块体类型}\label{fig:samples:lsblockclassify}
+    \end{subfigure} %此处可以用“\\”换行
+    \begin{subfigure}[b]{0.36\figwidth}
+      \centering
+      \includegraphics[width=\textwidth]{blockclassify1}
+      \caption{平面示意图}\label{fig:samples:lsblockclassify1}
+    \end{subfigure}
+  \bicaption{块体分类（横排插图示例）}{Block classification (example for landscape figure)}\label{fig:samples:lsblcfy}
+\end{figure}
+\end{landscape}
+}
+
 特别注意，模版支持多种常用插图文件格式，比如\texttt{pdf}、\texttt{png}、\texttt{jpg}、\texttt{tif}等，在用\ltxcmdname{includegraphics}命令引入插图文件时，文件名可以不包含扩展名，\LaTeX{} 会自行匹配，这样做的好处是当你用另一种更好的文件格式提供同一幅插图时（比如用效果更好的矢量图格式\texttt{pdf}代替原来不够清晰的\texttt{jpg}文件），直接替换插图文件即可，正文中不需要做任何更改。
 
-另外，关于图表的标题，由于学校毕业论文模板要求同时给出中、英文标题，因此在排版图表标题时使用“\ltxcmdname{bicaption}”，其格式为：
+关于图表的标题，由于学校毕业论文模板要求同时给出中、英文标题，因此在排版图表标题时使用“\ltxcmdname{bicaption}”，其格式为：
 \begin{verbatim}
   \bicaption[中文短标题]{中文标题}
             [Short English title]{Title in English}
 \end{verbatim}
-其中，方括号中的可选参数为出现在目录等其他文档结构中的标题，当图表标题很长或者包含一些不宜出现在目录中的额外标记（如文献引用标注等）时，可使用该可选参数调整呈现在目录中的标题。
+其中，方括号中的可选参数为出现在目录等其他文档结构中的标题，当图表标题很长或者包含一些不宜出现在目录中的额外标记（如文献引用标注等）时，可使用此可选参数调整呈现在目录中的标题。
 
 \subsection{表格}\label{sec:tab}
 表格和插图一样，建议使用浮动对象，即将表格放在浮动对象环境\texttt{table}中，例如\tabref{tab:samples:normal}。但是也有一些例外，例如跨页的长表格\texttt{longtable}（\tabref{tab:samples:longtable}），由于不受页面长度限制，所以不必放在浮动对象中，放进去反而会出错。
@@ -335,9 +376,9 @@ z = \left\{
   % (1) 续页表格的标题、页码不出现在表格目录中，标题和表格纵向间距较小（可自行调整），注意用“\thetable”输出表格编号
   %\multicolumn{2}{c}{\bfseries\small \tablename\ \thetable\ {跨页长表示例及表格列选项参数说明（续表）}} \\
   %\multicolumn{2}{c}{\bfseries\small Table\ \thetable\ {Sample for the long table over multiple pages and description for the parameters (continued)}} \\
-  % (2) 使用常规caption或bicaption排版，标题、页码将出现在表格目录中
+  % (2) 使用常规caption或bicaption排版，标题、页码将出现在表格目录中，若不想让续表出现在目录中，可将可选参数置空，如下例子所示
   %\caption[跨页长表示例（续表）]{跨页长表示例及表格列选项参数说明（续表）} \\
-  \bicaption[跨页长表示例（续表）]{跨页长表示例及表格列选项参数说明（续表）}{Sample for the long table over multiple pages and description for the parameters (continued)} \\
+  \bicaption[]{跨页长表示例及表格列选项参数说明（续表）}{Sample for the long table over multiple pages and description for the parameters (continued)} \\
     \hline \heiti 选项参数 & \tc{\heiti 说明} \\ \endhead %出现在续页上的表头
     \hline         l      & 该列单元格内容左对齐 \\
     \hline         c      & 该列单元格内容居中 \\
@@ -353,17 +394,12 @@ z = \left\{
     \hline
 \end{longtable}
 
-对于较宽的表格，可以使用“\ltxenvname{landscape}”环境按横排方式进行排版，如\tabref{tab:samples:landscapelongtable}所示，此表格也演示了在横排环境下的跨页长表排版。
-此外，跨页表格的标题与一般表格有所不同，需额外提供续表标题，排版格式如下：
-{\linespread{1.2}
-\begin{verbatim}
-  \bicaption[短标题]{标题}[Short title]{Title} \label{...} \\
-    \hline 列名1 & 列名2 & ... \\ \endfirsthead %第一页上的表头
-  \bicaption[短标题（续表）]{标题（续表）}
-            [Short title (continued)]{Title (continued)} \\
-    \hline 列名1 & 列名2 & ... \\ \endhead %出现在续页上的表头
-\end{verbatim}}
+对于较宽的表格，同样可以使用“\ltxenvname{landscape}”环境按横排方式进行排版，如\tabref{tab:samples:landscapelongtable}
+所示，此表格也演示了在横排环境下的跨页长表排版。此处依然可以使用“\ltxcmdname{afterpage}”命令调整横排页的出现时机，
+但当遇到排版程序代码的“\ltxenvname{lstlisting}”环境（本质上类似“\ltxenvname{verbatim}”环境）时有很大几率出问题，
+有时甚至会导致横排页内容整体消失，因此，当横排页出现在\ltxenvname{lstlisting}附近时一般需要手工调整。
 
+\afterpage{
 \begin{landscape}% 横排页环境
 \pagestyle{lscape}% 横排页眉页脚样式
 \begin{longtable}{|>{\tt}c|>{\kaishu}m{10cm}|}
@@ -372,7 +408,7 @@ z = \left\{
   %\multicolumn{2}{c}{\bfseries\small \tablename\ \thetable\ {横排跨页长表示例及表格列选项参数说明（续表）}} \\
   %\multicolumn{2}{c}{\bfseries\small \tablename\ \thetable\ {Sample for the landscape-oriented long table over multiple pages and description for the parameters (continued)}} \\
   %\caption[横排跨页长表示例]{横排跨页长表示例及表格列选项参数说明（续表）} \\
-  \bicaption[横排跨页长表示例（续表）]{横排跨页长表示例及表格列选项参数说明（续表）}{Sample for the landscape-oriented long table over multiple pages and description for the parameters (continued)} \\
+  \bicaption[]{横排跨页长表示例及表格列选项参数说明（续表）}{Sample for the landscape-oriented long table over multiple pages and description for the parameters (continued)} \\
     \hline \heiti 选项参数 & \tc{\heiti 说明} \\ \endhead %出现在续页上的表头
     %\hline \multicolumn{2}{r}{\textit{续表见下页}}\\ \endfoot %续表脚注
     %\endlastfoot %最后一页脚注
@@ -390,30 +426,18 @@ z = \left\{
     \hline
 \end{longtable}
 \end{landscape}
+}
 
-\subsection{计算机程序}
-计算机源程序可以用 \texttt{lstlisting} 环境排版，代码可直接拷贝进去，除语法高亮外基本原样输出。下面是一个简单的例子：
-\begin{lstlisting}
-  int PacketQueue::put(AVPacket *pkt) {
-      int ret;    
-      this->mutex->lock();
-      ret = put_private(pkt);
-      this->mutex->unlock();    
-      if (pkt != &this->flush_pkt && ret < 0) av_packet_unref(pkt);    
-      return ret;
-  }
-\end{lstlisting}
-
-本模版预设按C++语法进行排版及关键字高亮显示，可以用环境参数中切换语言并作其他更细致的设定，例如 \texttt{[language=Pascal]} 将当前 \texttt{lstlisting} 环境切换为 Pascal 语言。同时，页可以通过参数设置将其变为浮动对象：\texttt{[float, caption=A floating example]}，如 \codref{lst:samples:pas} 所示。更详细的用法可参考 \texttt{listings} 宏包的说明文档（\texttt{listings.pdf}）。
-\begin{lstlisting}[float, language=Pascal, caption={浮动代码块}, label={lst:samples:pas}]
-  var i:integer;
-  var x:integer;
-  for i:=maxint to 0 do
-  begin
-    if (i<=0) then x := 1;
-    if (i>0) then x := 0;
-  end;
-\end{lstlisting}
+跨页表格的标题与一般表格不同，需额外提供续表标题，排版格式如下：
+{\linespread{1.2}
+\begin{verbatim}
+  \bicaption[短标题]{标题}[Short title]{Title} \label{...} \\
+    \hline 列名1 & 列名2 & ... \\ \endfirsthead %第一页上的表头
+  \bicaption[短标题（续表）]{标题（续表）}
+            [Short title (continued)]{Title (continued)} \\
+    \hline 列名1 & 列名2 & ... \\ \endhead %出现在续页上的表头
+\end{verbatim}}
+按上述方式排版，续表标题及页码将出现在表目录中，若不想要这样的效果，可以将续表标题“\ltxcmdname{bicaption}”命令的可选参数置空（注意要保留“\texttt{[]}”）。
 
 \subsection{定理}
 定理，包括命题、引理、推论等的排版使用 \texttt{theorem}、\texttt{lemma}、\texttt{proposition} 等环境，每个定理可用可选参数指定一个别名。定理的证明放在 \texttt{proof} 环境中，证明结束标志为 \ltxcmdname{qedhere}。
@@ -463,8 +487,54 @@ z = \left\{
 复流形$M$是一个可微流形，它容许一个开覆盖$\{U_{\alpha}\}$和坐标映射$\varphi_{\alpha}:U_{\alpha}\rightarrow \mathbb{C}^n$ 使得对所有的$\alpha, \beta, \varphi_{\alpha}\circ \varphi_{\beta}^{-1}$在$\varphi_{\beta}(U_{\alpha}\cap U_{\beta})\subset \mathbb{C}^n$是全纯的。
 \end{definition}
 
+\subsection{算法}
+
+如\algoref{alg:euclid}所示，详细使用方法请参见文档 \href{https://ctan.org/pkg/algorithmicx?lang=en}{algorithmicx}。
+
+\begin{algorithm}[htbp]
+    \small
+    \caption{Euclid's algorithm}\label{alg:euclid}
+    \begin{algorithmic}[1]
+        \Procedure{Euclid}{$a,b$}\Comment{The g.c.d. of a and b}
+        \State $r\gets a\bmod b$
+        \While{$r\not=0$}\Comment{We have the answer if r is 0}
+        \State $a\gets b$
+        \State $b\gets r$
+        \State $r\gets a\bmod b$
+        \EndWhile\label{alg:euclid:while}
+        \State \textbf{return} $b$\Comment{The gcd is b}
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+对算法内某一行的引用：\algoref{alg:euclid}中第~\ref{alg:euclid:while} 行。
+
+\subsection{计算机程序}
+计算机源程序可以用 \texttt{lstlisting} 环境排版，代码可直接拷贝进去，除语法高亮外基本原样输出。下面是一个简单的例子：
+\begin{lstlisting}
+  int PacketQueue::put(AVPacket *pkt) {
+      int ret;    
+      this->mutex->lock();
+      ret = put_private(pkt);
+      this->mutex->unlock();    
+      if (pkt != &this->flush_pkt && ret < 0) av_packet_unref(pkt);    
+      return ret;
+  }
+\end{lstlisting}
+
+本模版预设按C++语法进行排版及关键字高亮显示，可以用环境参数中切换语言并作其他更细致的设定，例如 \texttt{[language=Pascal]} 将当前 \texttt{lstlisting} 环境切换为 Pascal 语言。同时，页可以通过参数设置将其变为浮动对象：\texttt{[float, caption=A floating example]}，如 \codref{lst:samples:pas} 所示。更详细的用法可参考 \texttt{listings} 宏包的说明文档（\texttt{listings.pdf}）。
+\begin{lstlisting}[float, language=Pascal, caption={浮动代码块}, label={lst:samples:pas}]
+  var i:integer;
+  var x:integer;
+  for i:=maxint to 0 do
+  begin
+    if (i<=0) then x := 1;
+    if (i>0) then x := 0;
+  end;
+\end{lstlisting}
+
 \subsection{交叉引用}
-理论上在文档的任何位置都可以设置交叉引用点，常用的有：特定章节、图、表、公式等。为被引用对象建立交叉引用点的方法是在相应位置使用 \ltxcmdname{label}命令设置一个标签，在需要引用的地方用 \ltxcmdname{ref} 命令建立引用链接，其参数就是前面所设置的标签名称。例如：参见 \ref{sec:samples} 节。由于引用链接只输出\LaTeX{} 为标签自动生成的编号，所以一般要在 \ltxcmdname{ref} 命令的前后配上相应文字，如“图”、“表”、“公式”等。为省去此琐碎环节，本模版预定义了一些固定的引用模式供大家使用，如：章节引用\secref{sec:samples}、插图引用\figref{fig:samples:blcfy}、表格引用\tabref{tab:samples:normal}、算法引用\algref{alg:euclid}、代码引用\codref{lst:samples:pas}、定理引用\thmref{thm:samples:t}、公理引用\axmref{thm:samples:a}、引理引用\lemref{thm:samples:l}、命题引用\prpref{thm:samples:p}、定义引用\defref{thm:samples:d}等。
+理论上在文档的任何位置都可以设置交叉引用点，常用的有：特定章节、图、表、公式等。为被引用对象建立交叉引用点的方法是在相应位置使用 \ltxcmdname{label}命令设置一个标签，在需要引用的地方用 \ltxcmdname{ref} 命令建立引用链接，其参数就是前面所设置的标签名称。例如：参见 \ref{sec:samples} 节。由于引用链接只输出\LaTeX{} 为标签自动生成的编号，所以一般要在 \ltxcmdname{ref} 命令的前后配上相应文字，如“图”、“表”、“公式”等。为省去此琐碎环节，本模版预定义了一些固定的引用模式供大家使用，如：章节引用\secref{sec:samples}、插图引用\figref{fig:samples:blcfy}、表格引用\tabref{tab:samples:normal}、算法引用\algoref{alg:euclid}、代码引用\codref{lst:samples:pas}、定理引用\thmref{thm:samples:t}、公理引用\axmref{thm:samples:a}、引理引用\lemref{thm:samples:l}、命题引用\prpref{thm:samples:p}、定义引用\defref{thm:samples:d}等。
 
 另外，还可以使用 \ltxcmdname{pageref}引用对象所在页码，例如：\figref{fig:samples:blcfy}在第 \pageref{fig:samples:blcfy} 页。
 
