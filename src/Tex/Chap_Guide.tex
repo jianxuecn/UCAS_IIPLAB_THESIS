@@ -1,6 +1,8 @@
+%!TEX root = ../Thesis.tex
+%!Mode:: "TeX:UTF-8"
+
 \chapter{LaTeX使用说明}\label{chap:guide}
 
-{
 为方便使用及更好地展示LaTeX排版的优秀特性，ucasthesis的框架和文件体系进行了细致地处理，尽可能地对各个功能和板块进行了模块化和封装。
 
 \section{初步设置}
@@ -133,26 +135,24 @@ Thesis.tex为主文档，其设计和规划了论文的整体框架，通过对�
 论文中图片的插入通常分为单图和多图，下面分别加以介绍：
 
 单图插入：假设插入名为\verb|c06h06|（后缀可以为.jpg、.png和.pdf，下同）的图片，其效果如图~\ref{fig:c06h06}。
-\begin{figure}[!htbp]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.40\textwidth]{c06h06}
-    \bicaption{\enspace 样图}{\enspace Sample Figure}
-    \fignote{对图片的注释}
-    \label{fig:c06h06}
-
+    \bicaption{样图}{Sample Figure}\label{fig:c06h06}
+    \figtabnote{对图片的注释}
 \end{figure}
 
 如果插图的空白区域过大，以图片\verb|c06h06|为例，自动裁剪如图~\ref{fig:c06h06_trim}。
-\begin{figure}[!htbp]
+\begin{figure}[htbp]
     \centering
     %trim option's parameter order: left bottom right top
     \includegraphics[trim = 60mm 80mm 60mm 60mm, clip, width=0.40\textwidth]{c06h06}
-    \bicaption{\enspace 自动裁切测试}{\enspace Auto-Crop Test}
+    \bicaption{自动裁切测试}{Auto-Crop Test}
     \label{fig:c06h06_trim}
 \end{figure}
 
 多图的插入如图~\ref{fig:oaspl}，多图不应在子图中给文本子标题，只要给序号，并在主标题中进行引用说明。
-\begin{figure}[!htbp]
+\begin{figure}[htbp]
     \centering
     \begin{subfigure}[b]{0.35\textwidth}
       \includegraphics[width=\textwidth]{oaspl_a}
@@ -177,15 +177,15 @@ Thesis.tex为主文档，其设计和规划了论文的整体框架，通过对�
       \caption{}
       \label{fig:oaspl_d}
     \end{subfigure}
-    \bicaption{\enspace 多子图测试}{\enspace A test for multi-subfig}
+    \bicaption{多子图测试}{A test for multi-subfig}
     \label{fig:oaspl}
 \end{figure}
 
 \subsection{表}
 
 请见表~\ref{tab:sample}。
-\begin{table}[!htbp]
-    \bicaption{\enspace 这是一个样表}{\enspace This is a sample table}
+\begin{table}[htbp]
+    \bicaption{这是一个样表}{This is a sample table}
     \label{tab:sample}
     \centering
     \footnotesize% fontsize
@@ -250,5 +250,3 @@ Walls等\citep{walls2013drought}根据Betts\citep{betts2005aging} 的研究，�
     
 对附录的引用，如对附录\ref{chap:app1}的引用。
 对附录中图表的引用，如，对附表\ref{apptab:1}的引用。
-\let\cleardoublepage\relax
-}

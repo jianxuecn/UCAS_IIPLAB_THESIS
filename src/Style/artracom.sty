@@ -139,8 +139,10 @@
 %-
 %- Adjust some caption styles according to the requirements of UCAS
 %-
-\captionsetup{singlelinecheck=false,justification=centering} %所有标题居中，不管长短
-\newcommand{\fignote}[1]{\begin{flushleft}{{\quad\quad}\linespread{1.25}\zihao{5}\sffamily \textbf{注:} \zihao{5}\sffamily{#1}}\end{flushleft}}
+\captionsetup{singlelinecheck=false,justification=centering} %Make all captions centered, regardless of length.
+% very ugly, not recommended. try to make the note (explanation) in the text.
+\providecommand{\figtabnote}[1]{\begin{flushleft}{{\quad\quad}\linespread{1.25}\zihao{5}\rmfamily \textbf{\notename:} #1}\end{flushleft}}
+\providecommand{\figtabnoten}[2]{\begin{flushleft}{{\quad\quad}\linespread{1.25}\zihao{5}\rmfamily \textbf{\notename #1:} #2}\end{flushleft}}
 %-
 %-> Adjust enumerate styles
 %-

@@ -581,6 +581,7 @@
     \def\definitionname{\ucas@label@en@definitionname}
     \def\examplename{\ucas@label@en@examplename}
     \def\remarkname{\ucas@label@en@remarkname}
+    \def\notename{\ucas@label@en@notename}
     \def\proofname{\ucas@label@en@proofname}
     \def\@title{\ucas@value@en@titlemark}
     \def\@author{\ucas@value@en@author}
@@ -612,6 +613,7 @@
     \def\definitionname{\ucas@label@ch@definitionname}
     \def\examplename{\ucas@label@ch@examplename}
     \def\remarkname{\ucas@label@ch@remarkname}
+    \def\notename{\ucas@label@ch@notename}
     \def\proofname{\ucas@label@ch@proofname}
     \def\@title{\ucas@value@ch@titlemark}
     \def\@author{\ucas@value@ch@author}

@@ -405,7 +405,7 @@
         %\setCJKmainfont{SimSun}[BoldFont=STZhongsong,ItalicFont=KaiTi]%
         \setCJKsansfont{SimHei}[AutoFakeBold=2.5]%
         \setCJKmonofont{FangSong}%
-        %\newCJKfontfamily[zhsong]\songti{SimSun}%%
+        %\newCJKfontfamily[zhsong]\songti{SimSun}%Already defined
         %\newCJKfontfamily[zhhei]\heiti{SimHei}%
         %\newCJKfontfamily[zhkai]\kaishu{KaiTi}%
         %\newCJKfontfamily[zhfs]\fangsong{FangSong}%
@@ -418,10 +418,10 @@
         ]
         \setCJKsansfont{Heiti SC}[BoldFont = * Medium]%
         \setCJKmonofont{STFangsong}%
-        \newCJKfontfamily[zhsong]\songti{Songti SC}%
-        \newCJKfontfamily[zhhei]\heiti{Heiti SC}%
-        \newCJKfontfamily[zhkai]\kaishu{Kaiti SC}%
-        \newCJKfontfamily[zhfs]\fangsong{STFangsong}%
+        %\newCJKfontfamily[zhsong]\songti{Songti SC}%Already defined
+        %\newCJKfontfamily[zhhei]\heiti{Heiti SC}%
+        %\newCJKfontfamily[zhkai]\kaishu{Kaiti SC}%
+        %\newCJKfontfamily[zhfs]\fangsong{STFangsong}%
     \else\ifartx@adobe% call font from system font library
         \setCJKmainfont{AdobeSongStd-Light}[%
             AutoFakeBold=2.5,
@@ -431,10 +431,10 @@
             AutoFakeBold=2.5,
         ]%
         \setCJKmonofont{AdobeFangsongStd-Regular}%
-        \newCJKfontfamily[zhsong]\songti{AdobeSongStd-Light}%
-        \newCJKfontfamily[zhhei]\heiti{AdobeHeitiStd-Regular}%
-        \newCJKfontfamily[zhkai]\kaishu{AdobeKaitiStd-Regular}%
-        \newCJKfontfamily[zhfs]\fangsong{AdobeFangsongStd-Regular}%
+        %\newCJKfontfamily[zhsong]\songti{AdobeSongStd-Light}%Already defined
+        %\newCJKfontfamily[zhhei]\heiti{AdobeHeitiStd-Regular}%
+        %\newCJKfontfamily[zhkai]\kaishu{AdobeKaitiStd-Regular}%
+        %\newCJKfontfamily[zhfs]\fangsong{AdobeFangsongStd-Regular}%
     \else\ifartx@none% call font from local fontdir
     %- Without path: i) if font specified by a string without extension, fontspec will
     %- treat the given string as font name and use system fontconfig to search the font name
