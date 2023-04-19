@@ -3,16 +3,37 @@
 
 \chapter{LaTeX使用说明}\label{chap:guide}
 
-为方便使用及更好地展示LaTeX排版的优秀特性，ucasthesis的框架和文件体系进行了细致地处理，尽可能地对各个功能和板块进行了模块化和封装。
+本模板基于 \href{https://github.com/streamer-AP/UCAS\_Paper\_2023}{UCAS\_Paper\_2023} 修改而成。
+
+为方便使用及更好地展示LaTeX排版的优秀特性，本模板对框架和文件体系进行了细致的处理，尽可能地对各个功能和板块进行了模块化和封装。
+对于初学者来说，众多的文件目录也许一开始让人觉得有些无所适从，但阅读完下面的使用说明后，会发现原来使用思路是简单而清晰的。
+而且，当对\LaTeX{}有一定的认识和了解后，会发现其相对Word类排版系统极具吸引力的优秀特性。
+所以，如果是初学者，请不要退缩，请稍加尝试和坚持，以领略到\LaTeX{}的非凡魅力，
+并可以通过阅读相关资料如\LaTeX{} Wikibook \citep{wikibook2014latex} 来完善自己的使用知识。
 
 \section{初步设置}
 
+在本地安装软件进行编译：
 \begin{enumerate}
-    \item 使用overleaf：打开并注册\href{https://cn.overleaf.com/}{overleaf}。
-    \item 将整个文件夹上传至overleaf项目。
-    \item 右键菜单，设置编译器为XeLaTeX，选择TexLive 2021
-    \item 点击编译，即可预览PDF文件
+    \item 安装软件：根据所用操作系统和章节~\ref{sec:system}中的信息安装\LaTeX{}编译环境；
+    \item 获取模板：下载 \href{https://github.com/jianxuecn/UCAS\_IIPLAB\_THESIS}{UCAS\_IIPLAB\_THESIS} 模板，建议用git clone；
+    \item 编译模板：
+        \begin{enumerate}
+            \item Windows：双击运行artratex.bat脚本；
+            \item Linux或MacOS: {\scriptsize \verb|terminal| -> \verb|chmod +x ./artratex.sh| -> \verb|./artratex.sh xa|}；
+            \item 任意系统：都可使用\LaTeX{}编辑器打开Thesis.tex文件并选择xelatex编译引擎进行编译；
+        \end{enumerate}
+    \item 错误处理：若编译中遇到了问题，请先查看“常见问题”（章节~\ref{sec:qa}）。
 \end{enumerate}
+
+使用Overleaf在线编译：
+\begin{enumerate}
+    \item 使用Overleaf：打开并注册\href{https://cn.overleaf.com/}{Overleaf}；
+    \item 将整个文件夹上传至Overleaf项目；
+    \item 右键菜单，设置编译器为XeLaTeX，选择TexLive 2021；
+    \item 点击编译，即可预览PDF文件。
+\end{enumerate}
+
 编译完成即可获得本PDF说明文档。
 
 \section{文档目录简介}
@@ -53,7 +74,7 @@ Thesis.tex为主文档，其设计和规划了论文的整体框架，通过对�
 
 \subsection{Tex文件夹}
 
-文件夹内为论文的所有实体内容，正常情况下，这也是使用ucasthesis撰写学位论文时，主要关注和修改的一个位置，注：所有文件都必须采用UTF-8编码，否则编译后将出现乱码文本，详细分类介绍如下：
+文件夹内为论文的所有实体内容，正常情况下，这也是使用ucasthesis撰写学位论文时，主要关注和修改的一个位置，注：所有文件都必须采用UTF-8编码，否则编译后将出现乱码文本。详细分类介绍如下：
 
 \begin{itemize}
     \item Frontinfo.tex：为论文中英文封面信息。论文封面会根据英文学位名称如Master，Doctor自动切换为相应的格式。
@@ -67,6 +88,7 @@ Thesis.tex为主文档，其设计和规划了论文的整体框架，通过对�
 \subsection{Img文件夹}
 
 用于放置论文中所需要的图类文件，支持格式有：.jpg, .png, .pdf。其中，\verb|ucas_logo.pdf|为国科大校徽。
+不建议为各章节图片建子目录，即使图片众多，若命名规则合理，图片查询亦是十分方便。
 
 \subsection{Biblio文件夹}
 
@@ -120,6 +142,9 @@ Thesis.tex为主文档，其设计和规划了论文的整体框架，通过对�
 \begin{proposition}
    这是一个命题。 
 \end{proposition}
+\begin{proof}
+    这是一个证明。
+\end{proof}
 \begin{definition}
     这是一个定义。
 \end{definition}
@@ -151,33 +176,33 @@ Thesis.tex为主文档，其设计和规划了论文的整体框架，通过对�
     \label{fig:c06h06_trim}
 \end{figure}
 
-多图的插入如图~\ref{fig:oaspl}，多图不应在子图中给文本子标题，只要给序号，并在主标题中进行引用说明。
-\begin{figure}[htbp]
+多图的插入如图~\ref{fig:oaspl}，多图应在子图中给文本子标题，主标题尽量简洁，详细说明在正文中给出。子图的引用：图\ref{fig:oaspl_a}。
+\begin{figure}[!htbp]
     \centering
     \begin{subfigure}[b]{0.35\textwidth}
       \includegraphics[width=\textwidth]{oaspl_a}
-      \caption{}
+      \caption{子图说明}
       \label{fig:oaspl_a}
     \end{subfigure}%
     ~% add desired spacing
     \begin{subfigure}[b]{0.35\textwidth}
       \includegraphics[width=\textwidth]{oaspl_b}
-      \caption{}
+      \caption{子图说明}
       \label{fig:oaspl_b}
     \end{subfigure}
     \\% line break
     \begin{subfigure}[b]{0.35\textwidth}
       \includegraphics[width=\textwidth]{oaspl_c}
-      \caption{}
+      \caption{子图说明}
       \label{fig:oaspl_c}
     \end{subfigure}%
     ~% add desired spacing
     \begin{subfigure}[b]{0.35\textwidth}
       \includegraphics[width=\textwidth]{oaspl_d}
-      \caption{}
+      \caption{子图说明}
       \label{fig:oaspl_d}
     \end{subfigure}
-    \bicaption{多子图测试}{A test for multi-subfig}
+    \bicaption{总声压级}{OASPL}
     \label{fig:oaspl}
 \end{figure}
 
@@ -205,6 +230,26 @@ Thesis.tex为主文档，其设计和规划了论文的整体框架，通过对�
 \end{table}
 
 制图制表的更多范例，请见 \href{https://github.com/mohuangrui/ucasthesis/wiki}{ucasthesis 知识小站} 和 \href{https://en.wikibooks.org/wiki/LaTeX/Tables}{WiKibook Tables}。
+
+\subsection{算法}
+
+如见算法~\ref{alg:euclid}，详细使用方法请参见文档 \href{https://ctan.org/pkg/algorithmicx?lang=en}{algorithmicx}。
+
+\begin{algorithm}[htbp]
+    \small
+    \caption{Euclid's algorithm}\label{alg:euclid1}
+    \begin{algorithmic}[1]
+        \Procedure{Euclid}{$a,b$}\Comment{The g.c.d. of a and b}
+        \State $r\gets a\bmod b$
+        \While{$r\not=0$}\Comment{We have the answer if r is 0}
+        \State $a\gets b$
+        \State $b\gets r$
+        \State $r\gets a\bmod b$
+        \EndWhile\label{eucliden1dwhile}
+        \State \textbf{return} $b$\Comment{The gcd is b}
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
 
 \subsection{参考文献引用}
 
