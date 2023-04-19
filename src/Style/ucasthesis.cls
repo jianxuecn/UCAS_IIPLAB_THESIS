@@ -130,7 +130,7 @@
 %- specifies the amount of space between paragraphs.
 \setlength{\parskip}{0.5ex plus 0.25ex minus 0.25ex}
 %- line spacing
-\linespread{1.6}% line space setting
+\linespread{1.35}% line space setting
 \raggedbottom% prevent adding vertical white space in strange places
 %- default pagestyle is page number at bottom without headers and footers
 \pagestyle{plain}
@@ -298,11 +298,11 @@
 
         \vspace*{\stretch{2}}
 
-        {\zihao{1}\bfseries\sffamily {\ucas@label@ch@thesis}}
+        {\zihao{1}\sffamily\bfseries {\ucas@label@ch@thesis}}
 
         \vspace*{\stretch{3}}
 
-        {\zihao{-3}\bfseries\sffamily \ulenhance[1.5pt]{\ucas@value@ch@title}}
+        {\zihao{-3}\heiti\bfseries \ulenhance[1.5pt]{\ucas@value@ch@title}}
 
         \vspace*{\stretch{3}}
 
@@ -561,11 +561,16 @@
     \def\listappfigname{}
     \def\listtablename{\ucas@label@en@lstabname}
     \def\listapptabname{}
+    \def\@appname{\ucas@label@en@appname}
+    \def\@listfigtabphname{\ucas@label@en@lsfigtabphname}
+    \def\@appfigname{\ucas@label@en@appfigname}
+    \def\@apptabname{\ucas@label@en@apptabname}
     \def\bibname{\ucas@label@en@bibname}
     \def\refname{\ucas@label@en@bibname}
     \def\algname{\ucas@label@en@algname}
     \def\bibetal{\ucas@label@en@bibetal}
     \def\biband{\ucas@label@en@biband}
+    \def\@appphname{\ucas@label@en@appphname}
     \def\axiomname{\ucas@label@en@axiomname}
     \def\theoremname{\ucas@label@en@theoremname}
     \def\lemmaname{\ucas@label@en@lemmaname}
@@ -576,20 +581,28 @@
     \def\definitionname{\ucas@label@en@definitionname}
     \def\examplename{\ucas@label@en@examplename}
     \def\remarkname{\ucas@label@en@remarkname}
+    \def\notename{\ucas@label@en@notename}
     \def\proofname{\ucas@label@en@proofname}
     \def\@title{\ucas@value@en@titlemark}
     \def\@author{\ucas@value@en@author}
+    \def\progname{\ucas@label@en@progname}
+    \def\listprogname{\ucas@label@en@listprogname}
 \else
     \def\contentsname{\ucas@label@ch@tocname}
     \def\listfigurename{\ucas@label@ch@lsfigname}
     \def\listappfigname{}
     \def\listtablename{\ucas@label@ch@lstabname}
     \def\listapptabname{}
+    \def\@appname{\ucas@label@ch@appname}
+    \def\@listfigtabphname{\ucas@label@ch@lsfigtabphname}
+    \def\@appfigname{\ucas@label@ch@appfigname}
+    \def\@apptabname{\ucas@label@ch@apptabname}
     \def\algname{\ucas@label@ch@algname}
     \def\bibname{\ucas@label@ch@bibname}
     \def\refname{\ucas@label@ch@bibname}
     \def\bibetal{\ucas@label@ch@bibetal}
     \def\biband{\ucas@label@ch@biband}
+    \def\@appphname{\ucas@label@ch@appphname}
     \def\axiomname{\ucas@label@ch@axiomname}
     \def\theoremname{\ucas@label@ch@theoremname}
     \def\lemmaname{\ucas@label@ch@lemmaname}
@@ -600,9 +613,12 @@
     \def\definitionname{\ucas@label@ch@definitionname}
     \def\examplename{\ucas@label@ch@examplename}
     \def\remarkname{\ucas@label@ch@remarkname}
+    \def\notename{\ucas@label@ch@notename}
     \def\proofname{\ucas@label@ch@proofname}
     \def\@title{\ucas@value@ch@titlemark}
     \def\@author{\ucas@value@ch@author}
+    \def\progname{\ucas@label@ch@progname}
+    \def\listprogname{\ucas@label@ch@listprogname}
 \fi
 %---------------------------------------------------------------------------%
 %->> Structure layout
@@ -610,7 +626,7 @@
 %- chapter
 \ctexset {
     chapter = {
-        format = \linespread{1.0}\zihao{4}\bfseries\sffamily\centering,
+        format = \linespread{1.0}\zihao{4}\heiti\bfseries\centering,
         nameformat = {},
         titleformat = {},
         number = \arabic{chapter},
@@ -624,7 +640,7 @@
 %- section
 \ctexset {
     section = {
-        format = \linespread{1.0}\zihao{-4}\sffamily\raggedright,
+        format = \linespread{1.0}\zihao{-4}\heiti\raggedright,
         numberformat = \rmfamily,
         aftername = \quad,
         beforeskip = {24pt},
@@ -634,7 +650,7 @@
 %- subsection
 \ctexset {
     subsection = {
-        format = \linespread{1.0}\zihao{-4}\sffamily\raggedright,
+        format = \linespread{1.0}\zihao{-4}\heiti\raggedright,
         numberformat = \rmfamily,
         aftername = \quad,
         beforeskip = {12pt},
@@ -644,7 +660,7 @@
 %- subsubsection
 \ctexset {
     subsubsection = {
-        format = \linespread{1.0}\zihao{-4}\sffamily\raggedright,
+        format = \linespread{1.0}\zihao{-4}\heiti\raggedright,
         numberformat = \rmfamily,
         aftername = \quad,
         beforeskip = {12pt},
@@ -655,7 +671,7 @@
 \ctexset {
     appendix = {
         numbering = true,
-        number = \rmfamily\zhnum{chapter},
+        number = \heiti\zhnum{chapter},%\sffamily\bfseries\chinese{chapter},
     }
 }
 %---------------------------------------------------------------------------%
@@ -684,7 +700,7 @@
         {\leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
         \parindent #2\relax\@afterindenttrue
         \interlinepenalty\@M
-        \leavevmode \zihao{-4}\sffamily
+        \leavevmode \zihao{-4}\heiti
         \@tempdima #3\relax
         \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
         {#4}\nobreak
@@ -704,7 +720,7 @@
             \parindent \z@ \rightskip \@pnumwidth
             \parfillskip -\@pnumwidth
             {\leavevmode
-            \zihao{4}\sffamily #1
+            \zihao{4}\heiti #1
             \leaders\hbox{$\m@th\mkern \@dotsep \cdot\mkern \@dotsep$}% add dotted toc line
             \hfil \hb@xt@\@pnumwidth{\hss #2}}\par
             \nobreak
@@ -722,7 +738,7 @@
         \begingroup
             \parindent \z@ \rightskip \@pnumwidth
             \parfillskip -\@pnumwidth
-            \leavevmode \zihao{4}\sffamily
+            \leavevmode \zihao{4}\heiti
             \advance\leftskip\@tempdima
             \hskip -\leftskip
             #1\nobreak
@@ -742,4 +758,3 @@
 \renewcommand*\l@table{\@dottedtocline{1}{1em}{1.8em}}
 %---------------------------------------------------------------------------%
 \endinput
-

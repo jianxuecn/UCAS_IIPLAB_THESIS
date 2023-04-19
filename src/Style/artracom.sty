@@ -32,6 +32,17 @@
 %- this part adds normal packages
 \RequirePackage{chemfig}% draw 2D chemical structures
 \RequirePackage[version=4]{mhchem}% typeset chemical formulae [mhchem|chemformula]
+%- packages for tables
+\RequirePackage{booktabs,threeparttable,longtable}
+\RequirePackage{multicol}
+\RequirePackage{multirow}
+%- extra math packages
+\RequirePackage{amsfonts}
+% - the XeLaTeX logo
+\RequirePackage{metalogo}
+\RequirePackage{afterpage}
+%- provide a simpler way to change item number style in enumerate
+%\RequirePackage{enumerate}
 %- this part adds packages that should be loaded at the very end
 \AtEndPreamble{%
     %\RequirePackage{cleveref}% clever cross-referencing
@@ -95,54 +106,93 @@
 \providecommand{\Soptr}{\operatorname{\mathcal{S}}}% solution operator
 \providecommand{\Des}[1]{\mathrm{#1}}% descriptive superscripts and subscripts in roman type 
 \providecommand{\Rev}[1]{\begingroup\color{blue}{#1}\endgroup}% revision highlight
-
-\newcommand{\fignote}[1]{\begin{flushleft}{{\quad\quad}\linespread{1.25}\zihao{5}\sffamily \textbf{注:} \zihao{5}\sffamily{#1}}\end{flushleft}}
 %-
 %-> Graphical length factor
 %-
 \providecommand*{\onef}{0.6}% for single figure
 \providecommand*{\twof}{0.45}% for two subfigures
 \providecommand*{\trif}{0.32}% for three subfigures
-
 %-
 %-> Add dots before equation number
 %-
 \newcommand{\adddotsbeforeeqnnum}{\def\maketag@@@##1{\hbox{\m@th\normalfont\dots\ ##1}}}%
-\captionsetup[appfig][bi-second]{name=App Figure, font={small,bf,stretch=1.25}} %设置图的英文编号前缀
-\captionsetup[apptab][bi-second]{name=App Table, font={small,bf,stretch=1.25}} %设置表的英文编号前缀
-\captionsetup[appfig][bi-first]{name=附图, font={small,bf,stretch=1.25}} 
-\captionsetup[apptab][bi-first]{name=附表, font={small,bf,stretch=1.25}} 
-
-\DeclareCaptionType{appfig}[附图]
-\DeclareCaptionType{apptab}[附表]
-\newcounter{app}
-\newcounter{app_fig}
-\newcounter{app_tab}
-
-\setcounter{app}{0}
-\renewcommand\theappfig{\arabic{app}-\arabic{app_fig}}  
-\renewcommand\theapptab{\arabic{app}-\arabic{app_tab}} 
- 
-\renewcommand{\labelenumi}{(\arabic{enumi}) }
-\renewcommand{\labelenumii}{(\arabic{enumi}).\arabic{enumii}}
-\renewcommand{\labelenumiii}{(\arabic{enumi}).\arabic{enumii}.\arabic{enumiii}}
-\renewcommand{\labelenumiv}{(\arabic{enumi}).\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
-
-\fancypagestyle{figureheader}{
-  \fancyhf{}
-  \fancyhead[C]{\footnotesize 图表目录}%此处填写中文标题
-  \fancyfoot[C]{\footnotesize \thepage}% page number
-    \renewcommand{\headrulewidth}{0.8pt}% header rule
-    \renewcommand{\footrulewidth}{0pt}% footer rule
+%-
+%- Change the style of equation, figure, table numbering
+%-
+%\numberwithin{equation}{chapter}% set enumeration level
+%\renewcommand{\theequation}{\thechapter-\arabic{equation}}% configure the label style
+%\numberwithin{figure}{chapter}% set enumeration level
+%\renewcommand{\thefigure}{\thechapter-\arabic{figure}}% configure the label style
+%\numberwithin{table}{chapter}% set enumeration level
+%\renewcommand{\thetable}{\thechapter-\arabic{table}}% configure the label style
+%-
+%-> Custimize list environment
+%-
+\ifartx@list% enable enhanced list
+    % \thelstlisting is not defined until at \begin{document}.
+    % Find this information in texdoc listings-devel (http://mirrors.ctan.org/macros/latex/contrib/listings/listings-devel.pdf),
+    % the documented implementation of listings package, page 188.
+    \AtBeginDocument{%
+        \renewcommand*{\thelstlisting}{\thechapter-\arabic{lstlisting}}% configure the lstlisting (computer program) numbering style
+    }
+\fi
+%-
+%- Adjust some caption styles according to the requirements of UCAS
+%-
+\captionsetup{singlelinecheck=false,justification=centering} %Make all captions centered, regardless of length.
+% somewhat ugly, not recommended. try to put the note (explanation) in the text.
+\providecommand{\fignote}[1]{
+  \begin{minipage}[t]{.85\linewidth}
+    \linespread{1.25}\rmfamily\zihao{5}
+    \textbf{\notename:}
+    \begin{minipage}[t]{\linewidth-1.5em}
+    #1
+    \end{minipage}
+  \end{minipage}
 }
-
-\fancypagestyle{appendixheader}{
-  \fancyhf{}
-  \fancyhead[C]{\footnotesize 附\quad 录}%此处填写中文标题
-  \fancyfoot[C]{\footnotesize \thepage}% page number
-    \renewcommand{\headrulewidth}{0.8pt}% header rule
-    \renewcommand{\footrulewidth}{0pt}% footer rule
+\providecommand{\fignoten}[2]{
+  \begin{minipage}[t]{.85\linewidth}
+    \linespread{1.25}\rmfamily\zihao{5}
+    \textbf{\notename #1:}
+    \begin{minipage}[t]{\linewidth-2em}
+    #2
+    \end{minipage}
+  \end{minipage}
+  \par
 }
+\providecommand{\tabnote}[1]{
+  \par
+  \vspace*{1ex}
+  \begin{minipage}[t]{.85\linewidth}
+    \linespread{1.25}\rmfamily\zihao{5}
+    \textbf{\notename:}
+    \begin{minipage}[t]{\linewidth-1.5em}
+    #1
+    \end{minipage}
+  \end{minipage}
+  \vspace{0.1ex}
+}
+\providecommand{\tabnoten}[2]{
+  \par
+  \vspace*{1ex}
+  \begin{minipage}[t]{.85\linewidth}
+    \linespread{1.25}\rmfamily\zihao{5}
+    \textbf{\notename #1:}
+    \begin{minipage}[t]{\linewidth-2em}
+    #2
+    \end{minipage}
+  \end{minipage}
+  \vspace{0.1ex}
+}
+%-
+%-> Adjust enumerate styles
+%-
+\ifartx@list% enhanced list and verbatim structures enabled
+    \setlist[enumerate,1]{label=(\arabic*), ref=(\arabic*)}
+    \setlist[enumerate,2]{label=(\alph*), ref=(\theenumi-\alph*)}
+    \setlist[enumerate,3]{label=(\roman*), ref=(\theenumii-\alph*)}
+\fi
+
 %---------------------------------------------------------------------------%
 \endinput
 
