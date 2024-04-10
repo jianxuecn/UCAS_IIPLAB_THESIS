@@ -554,8 +554,8 @@ z = \left\{
 \end{tabular}
 \end{center}
 
-其中，后缀“\texttt{t}”表示“textual”，即句中（文本中的）引用，也就是引用本身是句子的一个成分；
-后缀“\texttt{p}”表示“parenthetical”，即句末（括号里的）引用，作为一个插入语（附加说明）存在。请自行体会其中的区别。
+其中，后缀“\texttt{t}”表示“textual”，即句中（文本中的）引用，也就是引用本身是句子的一个成分，去掉引用句子就不通了；
+后缀“\texttt{p}”表示“parenthetical”（括号里的），即句中插入说明或句末引用，作为一个插入语（附加说明）存在，非句子成分，去掉引用句子仍然是完整通顺的。请自行体会其中的区别。
 
 但以上命令主要为英文文献设计，有些地方并不是很符合中文的习惯。在中文文献中，若使用数字序号形式的引用标注，
 句末引用一般采用上标形式，句中引用则仍使用正常形式。但在基础模板中，虽然提供了“\texttt{super}”文档参数支持上标形式的引用标注，
@@ -567,7 +567,7 @@ z = \left\{
   \newcommand*{\ntcite}[1]{~\cite{#1}~}
   \newcommand*{\npcite}[1]{\textsuperscript{\cite{#1}}}
 \end{verbatim}}
-用于生成不同位置的文献引用标注，此处文献\ntcite{wikibook2014latex}是句中引用（文献本身是句子成分之一），这是句末（上标，文献不是句子成分之一，仅表示名词或句子来自哪篇文献）引用\npcite{wikibook2014latex}。
+用于生成不同位置的文献引用标注，此处文献\ntcite{wikibook2014latex}是句中引用（文献本身是句子成分之一），这是句中\npcite{wikibook2014latex}插入引用，这是句末（文献不是句子成分之一，仅表示名词或句子来自哪篇文献）引用\npcite{wikibook2014latex}。
 
 参考文献信息记录在“\texttt{.bib}”文件中，务必保证每一条文献信息完整、准确，建议用开源软件~\href{https://www.jabref.org/}{JabRef}~进行信息录入和管理。
 
