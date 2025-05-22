@@ -323,7 +323,7 @@
     %! If you have to use it, be sure only set it for roman (serif) font and math roman font.
     %! Because XITS is essentially a times font (a kind of serif fonts), it is an open source alternative to
     %! roman (serif) fonts and does not meet the needs of other fonts, such as sans-serif and typewriter (mono) fonts.
-    \IfFontExistsTF{XITS-Regular.otf}{%
+    \IfFontExistsTF{NoXITS-Regular.otf}{%
     \RequirePackage{unicode-math}% unicode font configuration <XITS|STIX2>
     \def\boldsymbol#1{\symbfit{#1}}% treat obsoleteness
     \providecommand{\Vector}[1]{\symbfit{#1}}% general vectors in bold italic
