@@ -123,36 +123,42 @@ A=\int_0^1 \frac{\ln{x}}{x}\dif x
 A=\int_0^1 \frac{\ln{x}}{x}\dif x
 \end{displaymath}
 
-带编号的数学公式：
+带编号的数学公式一般使用\ltxenvname{equation}环境，需要在正文中引用的在环境内用\ltxcmdname{label}命令设置引用标签：
 \begin{equation}\label{eq:samples:one}
-A=\int_0^1 \frac{\ln{x}}{x}\dif x
+F_n=\sum_{i=0}^{\infty} \binom{n-i}{i}
 \end{equation}
 
-带编号的数学公式组（注意利用列分隔符“\texttt{\&}”对齐）：
+带编号的数学公式组使用\ltxenvname{align}环境（注意利用列分隔符“\texttt{\&}”对齐）：
 \begin{align}
 \mathcal{M}^2(\hat{\theta},\theta) &= E[(\hat{\theta} - \theta)^2] \\
 \mathcal{M}^2(\hat{\theta},\theta) &= \operatorname{var}^2(\hat{\theta}) + {\cal B}^2(\hat{\theta})
 \end{align}
 
+还可用\ltxenvname{equation}内套一个\ltxenvname{aligned}环境合并公式组，统一给一个编号：
+\begin{equation}
+\begin{aligned}
+\mathcal{M}^2(\hat{\theta},\theta) &= E[(\hat{\theta} - \theta)^2] \\
+\mathcal{M}^2(\hat{\theta},\theta) &= \operatorname{var}^2(\hat{\theta}) + {\cal B}^2(\hat{\theta})
+\end{aligned}
+\end{equation}
+
 \textbf{特别注意：}此处应避免使用 \ltxenvname{eqnarray} 环境，因为此环境存在很多问题，且与\ltxenvname{amsmath}宏包风格不统一，
 具体问题请参考这篇文章“\href{https://tug.org/pracjourn/2006-4/madsen/madsen.pdf}{Avoid eqnarray!}”。
 
-跨行长公式（注意利用“\texttt{\&}”对齐）：
+跨行长公式在\ltxenvname{equation}环境内套一个\ltxenvname{split}环境（注意利用“\texttt{\&}”对齐）：
 \begin{equation}
 \begin{split}
 a& =b+c-d\\
  & \quad +e-f\\
- & =g+h\\
- & =i
+ & =g
 \end{split}
 \end{equation}
 
-带子编号的数学公式组：
+带子编号的数学公式组在\ltxenvname{align}环境\textbf{外}套一个\ltxenvname{subequations}环境：
 \begin{subequations}\label{eq:samples:grp}
 \begin{align}
 a&=b+c\label{eq:samples:grp:a}\\
-d&=e+f+g\label{eq:samples:grp:b}\\
-h&=i+j\label{eq:samples:grp:c}
+d&=e+f+g\label{eq:samples:grp:b}
 \end{align}
 \end{subequations}
 
@@ -160,10 +166,10 @@ h&=i+j\label{eq:samples:grp:c}
 \begin{equation}
 \Re{z} =\frac{n\pi \dfrac{\theta +\psi}{2}}{
         \left(\dfrac{\theta +\psi}{2}\right)^2 + \left( \dfrac{1}{2}
-        \log \left\lvert\dfrac{B}{A}\right\rvert\right)^2}.
+        \log \left\lvert\dfrac{B}{A}\right\rvert\right)^2}
 \end{equation}
 
-带条件赋值：
+带条件赋值在\ltxenvname{equation}环境内使用\ltxenvname{array}环境：
 \begin{equation}
 z = \left\{
 \begin{array}{ll}
@@ -174,7 +180,17 @@ z = \left\{
 \right.
 \end{equation}
 
-矩阵的输入用 \texttt{matrix} 环境，以“\texttt{\&}”分列、以“\ltxcmdname{\textbackslash}”或“\ltxcmdname{cr}”分行，下面是一个例子：
+也可以在\ltxenvname{equation}环境内用\ltxenvname{cases}环境：
+\begin{equation}
+z = 
+\begin{cases}
+ 1 & (x>0)\\
+ 0 & (x=0)\\
+-1 & (x<0)
+\end{cases}
+\end{equation}
+
+矩阵的输入用 \ltxenvname{matrix} 环境，以“\texttt{\&}”分列、以“\ltxcmdname{\textbackslash}”或“\ltxcmdname{cr}”分行，下面是一个例子：
 \begin{equation}
 \left(
   \begin{matrix}
@@ -195,51 +211,66 @@ z = \left\{
 \right)
 \end{equation}
 
+也可直接用带括号的版本，如\ltxenvname{pmatrix}（小括号）、\ltxenvname{bmatrix}（中括号）、\ltxenvname{vmatrix}（竖线）等：
+\begin{equation}
+  \begin{bmatrix}
+    K_{11} &K_{12} &K_{13} &\ldots &K_{1n}\\
+    K_{21} &K_{22} &K_{23} &\ldots &K_{2n}\\
+    K_{31} &K_{32} &K_{33} &\ldots &K_{3n}\\
+    \vdots &\vdots &\vdots &\ddots &\vdots\\
+    K_{n1} &K_{n2} &K_{n3} &\ldots &K_{nn}
+  \end{bmatrix}
+  \begin{bmatrix}
+     D_{1}\\ D_{2}\\ D_{3}\\ \vdots\\ D_{n}
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    F_{1}\\ F_{2}\\ F_{3}\\ \vdots\\ F_{n}
+  \end{bmatrix}
+\end{equation}
+
 正文中对公式的引用一律使用\ltxcmdname{eqref}命令输出带括号的公式编号，例如：公式~\eqref{eq:samples:one}。
 
 关于数学公式的特别提示：
 \begin{enumerate}
   \item \textbf{多字母的函数或算子名称表示要规范}：多字母的函数或算子名称在~\LaTeX{}中有专门的排版方式，一些常用的已经定义了专门的命令，
-        例如\ltxcmdname{sin}、\ltxcmdname{max}、\ltxcmdname{log}等，对于一些\ltxenvname{amsmath}包中未定义的函数，一定要在数学环境中用\ltxcmdname{operatorname}命令括起来，
-        例如：\ltxcmdname{operatorname\{softmax\}(A)}就显示为$\operatorname{softmax}(A)$，这和在数学环境中用\ltxcmdname{text}（显示为$\text{softmax}(A)$）或
+        例如\ltxcmdname{sin}、\ltxcmdname{max}、\ltxcmdname{log}等，对于一些\ltxenvname{amsmath}包中未定义的函数，
+        一定要在数学环境中用\ltxcmdname{operatorname}命令括起来，
+        例如：\ltxcmdname{operatorname\{softmax\}(A)}就显示为$\operatorname{softmax}(A)$，
+        这和在数学环境中用\ltxcmdname{text}（显示为$\text{softmax}(A)$）或
         直接写（显示为$softmax(A)$）都有差别，后者尤为错误。
-  \item \textbf{尽量不要使用多字母变量}：在数学环境中直接输出多字母变量会产生歧义，数学环境中默认的排版规则认为每一个英文字母都是一个单独的变量，在字符间距的处理上有特殊的考虑，
-        若直接输入多字母变量，则各个字母间会分得比较开，例如：$Ver_i$，读者容易看成$V$、$e$和$r_i$的乘积，因此数学公式中要避免使用多字母变量。
+  \item \textbf{尽量不要使用多字母变量}：在数学环境中直接输出多字母变量会产生歧义，数学环境中默认的排版规则认为每一个英文字母都是一个单独的变量，
+        在字符间距的处理上有特殊的考虑，若直接输入多字母变量，则各个字母间会分得比较开，例如：$Ver_i$，读者容易看成$V$、$e$和$r_i$的乘积，
+        因此数学公式中要避免使用多字母变量。
         在这里，一条重要的原则是：数学公式要经过一定的提炼和抽象，不要直接从程序代码翻译，即不要在数学公式的表达中带入写程序的习惯。\label{enum:mathtips:1}
-  \item \textbf{不同类型的数学符号尽量用不同的字体表示}：不同类型的数学符号用不同类型的字体表示有利于增加公式的辨识度，使读者更易理解，例如矩阵和向量一般用粗体，
-        $\mathbf{Ax}=\mathbf{b}$就比$Ax=b$含义更明确。
-  \item \textbf{用有意义的单词做变量上下标时单词要放在文本环境中}：有时候为了表达更简洁明了，会在变量的上标或下标用单词表示某些特殊含义，例如$A_\text{max}$，
-        此时，用来表达特殊含义的单词务必放在\ltxcmdname{text}命令中，理由同~\ref{enum:mathtips:1}。
+  \item \textbf{不同类型的数学符号尽量用不同的字体表示}：不同类型的数学符号用不同类型的字体表示有利于增加公式的辨识度，使读者更易理解，
+        例如矩阵和向量一般用粗体，$\mathbf{Ax}=\mathbf{b}$就比$Ax=b$含义更明确。
+  \item \textbf{用有意义的单词做变量上下标时单词要放在文本环境中}：有时候为了表达更简洁明了，会在变量的上标或下标用单词表示某些特殊含义，
+        例如$A_\text{max}$，此时，用来表达特殊含义的单词务必放在\ltxcmdname{text}命令中，理由同~\ref{enum:mathtips:1}。
+  \item \textbf{公式前面不要加空行}：一般公式内容是紧接上文的，逻辑上不应出现中断，因此公式应紧接前文，中间不要有空行。
+        而从排版的角度讲，出现空行意味着另起一段，这会在公式前面出现不正常的多余空白，也不美观。
+        至于公式之后加不加空行，视情况而定。如果后面的文字是直接对公式中的符号进行解释，即整句话还没有结束，则不加空行；
+        如果后面的文字已经是另一段的开始，前面的内容到公式已经结束，则可加空行。
 \end{enumerate}
 
-\subsection{插图}
-为了能得到较好的排版效果，又不必做调整图形位置的乏味工作，\LaTeX{} 提供了一个浮动图形机制来自动将图形放置到合适的位置。为了使这一机制发挥最大效力，在写作时需注意以下几点：
+\subsection{插图}\label{sec:fig}
+为了能得到较好的排版效果，又不必做调整插图位置的乏味工作，\LaTeX{} 提供了一个浮动对象机制来自动将插图放置到合适的位置。为了使这一机制发挥最大效力，在写作时需注意以下几点：
 \begin{enumerate}
-	\item \textbf{不要使用依赖于图形放置位置的文本}：使用如“\emph{这幅图…}”或“\emph{下图…}”等短语要求所指图形需在固定位置，
-	      而像“{\kaishu 图1-1…}”这样的短语则允许图形出现在任意位置，而且配合\LaTeX{} 提供的强大的交叉引用功能，
+	\item \textbf{不要使用依赖于插图放置位置的文本}：使用如“\emph{这幅图……}”或“\emph{下图……}”等短语要求所指插图需在固定位置，
+	      而像“{\kaishu 图1-1……}”这样的短语则允许插图出现在任意位置，而且配合\LaTeX{} 提供的强大的交叉引用功能，
 	      完全可以自动生成插图编号并建立超链接。
-	\item \textbf{放轻松}：一些刚开始使用\LaTeX{} 的作者发现图形没有十分准确地出现在他们所想要的位置，往往会着急，并对其进行手工干预，
-	      这其实完全没有必要，图形的放置是\LaTeX{} 的工作，最好放轻松一些，等所有内容都撰写校对完成，最后再对插图位置作必要微调。
-	      如果你的论文结构合理，正文内容完整充实，此时你会发现插图都已在该在的位置上，没有调整的必要了。
+  \item \textbf{不要让插图出现的位置离引用位置过远}：虽然采用编号引用之后，理论上插图可以出现在论文的任何位置，但是请不要人为地制造阅读障碍，
+        尽量使插图出现在正文第一次引用位置的附近，即在撰写论文正文时，在紧挨着初次引用某插图的段落之后（或之前）的位置放置该插图。
+	\item \textbf{不要过早地去手动调整插图的放置位置}：一些刚开始使用\LaTeX{} 的作者发现插图没有十分准确地出现在他们所想要的位置，往往会着急，
+        并对其进行手工干预，这其实完全没有必要，插图的放置是\LaTeX{} 的工作，最好放轻松一些，等所有内容都撰写校对完成后再对插图位置作必要微调。
+	      如果论文结构合理，正文内容完整充实，此时就会发现插图都已在该在的位置上，没必要调整了。
 \end{enumerate}
-
-插图一般被放置在\ltxenvname{figure}环境中，\figref{fig:samples:coordinateaxis}是一个单幅插图的例子。\ltxenvname{figure}环境有一个可选参数允许用户指示图形有可能被放置的位置（实际上所有浮动对象环境均有类似的参数设置，例如\secref{sec:tab}要讲的表格环境），这一选项参数可以是下列字母的任意组合（缺省为\texttt{[tbp]}）：
-\begin{description}
-	\item[\texttt{h}（当前位置）] 将插图放置在正文文本中figure环境出现的地方，如果当前页所剩空间不够，这一参数将不起作用；
-	\item[\texttt{t}（顶部）] 将插图放置在页面顶部；
-	\item[\texttt{b}（底部）] 将插图放置在页面底部；
-	\item[\texttt{p}（浮动页）] 将插图放置在只允许有浮动对象的页面上
-\end{description}
-
-通常给出的参数越多，\LaTeX{} 的排版效果越好，例如\texttt{[htbp]}、\texttt{[tbp]}、\texttt{[htp]}、\texttt{[tp]}等组合的效果都不错。另外，在这些位置参数前面加上一个惊叹号（例如\texttt{[!ht]}）会使\LaTeX{} 忽略应用于文本页的审美条件，试图用最严格的标准来放置浮动图形。
-
-\figref{fig:samples:coordinateaxis}是单幅插图的例子。
 
 %% 单幅插图
 \begin{figure}[htbp]
-%%图形居中放置
+%%插图居中放置
 \centering
-%%插入图形文件
+%%插入插图文件
 \includegraphics[width=0.45\textwidth]{coordinateaxis}
 %                         ^                 ^
 %                插图宽度（相对于文本宽）  插图文件名（忽略扩展名）
@@ -247,7 +278,15 @@ z = \left\{
 \bicaption{平面的倾角、倾向及其法向矢量}{Dip, dip direction and normal vector of a plane}\label{fig:samples:coordinateaxis}
 \end{figure}
 
-\figref{fig:samples:blcfy}是包含子图的例子，在\texttt{figure}环境中嵌套\texttt{subfigure}环境即可，参数格式类似，唯一不同的是\texttt{subfigure}不是一个浮动对象（被限制在\texttt{figure}中），因此其位置参数是指子图对齐的方式：\texttt{b}表示底部对齐，\texttt{t}表示顶部对齐。子图间可以用“\ltxcmdname{\textbackslash}”换行。
+插图一般被放置在\ltxenvname{figure}环境中，\figref{fig:samples:coordinateaxis}是一个单幅插图的例子。\ltxenvname{figure}环境有一个可选参数允许用户指示插图有可能被放置的位置（实际上所有浮动对象环境均有类似的参数设置，例如\secref{sec:tab}要讲的表格环境），这一选项参数可以是下列字母的任意组合：
+\begin{description}
+	\item[\texttt{h}（当前位置）] 将插图放置在正文文本中figure环境出现的地方，如果当前页所剩空间不够，这一参数将不起作用；
+	\item[\texttt{t}（顶部）] 将插图放置在页面顶部；
+	\item[\texttt{b}（底部）] 将插图放置在页面底部；
+	\item[\texttt{p}（浮动页）] 将插图放置在只允许有浮动对象的页面上。
+\end{description}
+
+如果不指定，默认使用\texttt{[tbp]}。通常给出的参数越多，\LaTeX{} 的排版效果越好，例如\texttt{[htbp]}、\texttt{[tbp]}、\texttt{[htp]}、\texttt{[tp]}等组合的效果都不错。另外，在这些位置参数前面加上一个惊叹号（例如\texttt{[!ht]}）会使\LaTeX{} 忽略应用于文本页的审美条件，试图用最严格的标准来放置浮动图形。
 
 %% 包含子图的插图
 \begin{figure}[htbp]
@@ -266,11 +305,7 @@ z = \left\{
   \bicaption{块体分类}{Block classification}\label{fig:samples:blcfy}
 \end{figure}
 
-对于较宽的插图，可以使用“\ltxenvname{landscape}”环境按横排方式进行排版，如\figref{fig:samples:lsblcfy}所示。
-\textbf{注意：}由于横排的情况下整页只有一个插图，\ltxenvname{figure}环境的位置参数一般设置为“\texttt{p}”，以保证插图纵向居中摆放。
-另外，由于\ltxenvname{landscape}本身不是浮动对象，所以很可能在一页内容未排满之前遇到一个\ltxenvname{landscape}页而必须重新开始新的一页，
-导致当前页提前结束排版而出现大量不必要的空白，针对此问题，可使用“\ltxenvname{afterpage}”宏包提供的“\ltxcmdname{afterpage}”命令
-将\ltxenvname{landscape}页推迟到当前页排满后再开始。该命令并非$100\%$可靠，若排版结果仍然不理想，则需要进一步手工调整。
+\figref{fig:samples:blcfy}是包含子图的例子，在\texttt{figure}环境中嵌套\texttt{subfigure}环境即可，参数格式类似，唯一不同的是\texttt{subfigure}不是一个浮动对象（被限制在\texttt{figure}中），因此其位置参数是指子图对齐的方式：\texttt{b}表示底部对齐，\texttt{t}表示顶部对齐。子图间可以用“\ltxcmdname{\textbackslash}”换行。
 
 \afterpage{
 %% 整页横排的插图
@@ -294,7 +329,14 @@ z = \left\{
 \end{landscape}
 }
 
+对于较宽的插图，可以使用“\ltxenvname{landscape}”环境按横排方式进行排版，如\figref{fig:samples:lsblcfy}所示。
+\textbf{注意}：由于横排的情况下整页只有一个插图，\ltxenvname{figure}环境的位置参数一般设置为“\texttt{p}”，以保证插图纵向居中摆放。
+另外，由于\ltxenvname{landscape}本身不是浮动对象，所以很可能在一页内容未排满之前遇到一个\ltxenvname{landscape}页而必须重新开始新的一页，
+导致当前页提前结束排版而出现大量不必要的空白，针对此问题，可使用“\ltxenvname{afterpage}”宏包提供的“\ltxcmdname{afterpage}”命令
+将\ltxenvname{landscape}页推迟到当前页排满后再开始。该命令并非$100\%$可靠，若排版结果仍然不理想，则需要进一步手工调整。
+
 特别注意，模版支持多种常用插图文件格式，比如\texttt{pdf}、\texttt{png}、\texttt{jpg}、\texttt{tif}等，在用\ltxcmdname{includegraphics}命令引入插图文件时，文件名可以不包含扩展名，\LaTeX{} 会自行匹配，这样做的好处是当你用另一种更好的文件格式提供同一幅插图时（比如用效果更好的矢量图格式\texttt{pdf}代替原来不够清晰的\texttt{jpg}文件），直接替换插图文件即可，正文中不需要做任何更改。
+另外需\textbf{注意}：高分辨率的\texttt{png}格式文件会严重影响文档编译速度，建议转成\texttt{pdf}格式。
 
 关于图表的标题，由于学校毕业论文模板要求同时给出中、英文标题，因此在排版图表标题时使用“\ltxcmdname{bicaption}”，其格式为：
 \begin{verbatim}
@@ -304,7 +346,7 @@ z = \left\{
 其中，方括号中的可选参数为出现在目录等其他文档结构中的标题，当图表标题很长或者包含一些不宜出现在目录中的额外标记（如文献引用标注等）时，可使用此可选参数调整呈现在目录中的标题。
 
 \subsection{表格}\label{sec:tab}
-表格和插图一样，建议使用浮动对象，即将表格放在浮动对象环境\texttt{table}中，例如\tabref{tab:samples:normal}。但是也有一些例外，例如跨页的长表格\texttt{longtable}（\tabref{tab:samples:longtable}），由于不受页面长度限制，所以不必放在浮动对象中，放进去反而会出错。
+表格和插图一样，建议使用浮动对象，即将表格放在浮动对象环境\texttt{table}中，例如\tabref{tab:samples:normal}。\secref{sec:fig} 中提到的关于插图的排版原则大多数同样适用于表格，但是也有一些例外，例如跨页的长表格\texttt{longtable}（\tabref{tab:samples:longtable}），由于不受页面长度限制，所以不必放在浮动对象中，放进去反而会出错。
 
 %% 普通表格
 \begin{table}[htbp]
@@ -320,15 +362,52 @@ z = \left\{
 \end{tabular}
 \end{table}
 
-表格内容的输入则要比插图复杂一些，一般放在\texttt{tabular}环境中，也有的直接放在对应表格环境中（如\texttt{longtable}），列选项在表格环境参数中设置，不同的表格环境其内容大同小异。表格正文内容则一致以“\texttt{\&}”分列、以“\ltxcmdname{\textbackslash}”或“\ltxcmdname{tabularnewline}”换行。表格环境列布局的参数设置比较灵活，可以设定每一列的对齐方式（\texttt{l}、\texttt{r}或\texttt{c}，有几个就有几列）、字体（放在“\texttt{>}”后的大括号内）、是否加列间线（“\texttt{|}”）等（详细说明可参考\tabref{tab:samples:longtable}）。
+表格内容的输入则要比插图复杂一些，一般放在\texttt{tabular}环境中，也有的直接放在对应表格环境中（如\texttt{longtable}），列选项在表格环境参数中设置，不同的表格环境其内容大同小异。表格正文内容则一致以“\texttt{\&}”分列、以“\ltxcmdname{\textbackslash}”或“\ltxcmdname{tabularnewline}”换行。表格环境列布局的参数设置比较灵活，可以设定每一列的对齐方式（\texttt{l}、\texttt{r}或\texttt{c}，有几个就有几列）、字体（放在“\texttt{>}”后的大括号内）、是否加列间线（“\texttt{|}”）等，详细说明可参考\tabref{tab:samples:longtable}。
+
+跨页表格的标题与一般表格不同，需额外提供续表标题，排版格式如下：
+{\linespread{1.2}
+\begin{verbatim}
+  \bicaption[短标题]{标题}[Short title]{Title} \label{...} \\
+    \hline 列名1 & 列名2 & ... \\ \endfirsthead %第一页上的表头
+  \bicaption[短标题（续表）]{标题（续表）}
+            [Short title (continued)]{Title (continued)} \\
+    \hline 列名1 & 列名2 & ... \\ \endhead %出现在续页上的表头
+\end{verbatim}}
+按上述方式排版，续表标题及页码将出现在表目录中，若不想要这样的效果，可以将续表标题“\ltxcmdname{bicaption}”命令的可选参数置空（注意要保留“\texttt{[]}”）。
+
+%% 跨页长表
+\begin{longtable}{|>{\tt}c|>{\kaishu}m{10cm}|}
+  \bicaption[跨页长表示例]{跨页长表示例及表格列选项参数说明}{Sample for the long table over multiple pages and description for the parameters} \label{tab:samples:longtable}\\
+    \hline \heiti 选项参数 & \tc{\heiti 说明} \\ \endfirsthead %第一页上的表头
+  %% 出现在续页上的标题有两种排版方法（建议使用bicaption排版）：
+  % (1) 续页表格的标题、页码不出现在表格目录中，标题和表格纵向间距较小（可自行调整），注意用“\thetable”输出表格编号
+  %\multicolumn{2}{c}{\bfseries\small \tablename\ \thetable\ {跨页长表示例及表格列选项参数说明（续表）}} \\
+  %\multicolumn{2}{c}{\bfseries\small Table\ \thetable\ {Sample for the long table over multiple pages and description for the parameters (continued)}} \\
+  % (2) 使用常规caption或bicaption排版，标题、页码将出现在表格目录中，若不想让续表出现在目录中，可将可选参数置空，如下例子所示
+  %\caption[跨页长表示例（续表）]{跨页长表示例及表格列选项参数说明（续表）} \\
+  \bicaption[]{跨页长表示例及表格列选项参数说明（续表）}{Sample for the long table over multiple pages and description for the parameters (continued)} \\
+    \hline \heiti 选项参数 & \tc{\heiti 说明} \\ \endhead %出现在续页上的表头
+    \hline         l      & 该列单元格内容左对齐 \\
+    \hline         c      & 该列单元格内容居中 \\
+    \hline         r      & 该列单元格内容右对齐 \\
+    \hline     p\{width\} & 将内容放进一个宽为\texttt{width}的段落盒，等价于\ltxcmdname{parbox[t]\{width\}} \\
+    \hline     @\{decl.\} & 删除两边列之间的空白，插入指定的文本，即大括号间的内容\texttt{decl.} \\
+    \hline     m\{width\} & 指定列宽为\texttt{width}，超出宽度的文字将自动换行，作用接近\ltxcmdname{parbox\{width\}} \\
+    \hline     b\{width\} & 相当于\ltxcmdname{parbox[b]\{width\}} \\
+    \hline     >\{decl.\} & 可在每个列选项字母之前使用，将大括号间的内容（\texttt{decl.}）插入到该列每个单元格内容之前，可以用它来控制每一列的文本格式 \\
+    \hline     <\{decl.\} & 可在每个列选项字母之后使用，将大括号间的内容（\texttt{decl.}）插入到该列每个单元格内容之后，配合“\texttt{>}”使用可方便地将该列每个单元格放置在一个环境中，比如数学环境 \\
+    \hline          |     & 插入一条竖线 \\
+    \hline     !\{decl.\} & 与\texttt{|}类似，只不过插入的不是竖线而是大括号间的内容（\texttt{decl.}）  \\
+    \hline
+\end{longtable}
+
+\texttt{longtable}环境一般用于排版一页放不下的超长表格，与普通表格排版方式不一样，不能当做浮动对象，当它附近有较多浮动表格对象时有可能导致表格出现的顺序和生成的编号顺序不一致，因此如无必要，建议尽量少用跨页长表，对于过长的表格应当进行适当的拆分。
 
 此外，还可以使用 \ltxcmdname{multirow}、\ltxcmdname{multicolumn}等命令合并单元格，例如\tabref{tab:samples:threepart}。
 \begin{enumerate}
-	\item 多行单元格：\ltxcmdname{multirow\{nrows\}[bigstructs]\{width\}[fixup]\{text\}}。其中：\texttt{nrows}设定所占用的行数；\texttt{bigstructs}为可选项，主要是在使用了 bigstruct 宏包时使用；\texttt{width}设定该栏文本的宽度，如果想让 LaTeX 自行决定文本的宽度，则用 * 即可；\texttt{fixup}为可选项，主要用来调整文本的垂直位置；\texttt{text}为所要排版的文本，可用“\ltxcmdname{\textbackslash}”来强制换行。
+  \item 多行单元格：\ltxcmdname{multirow\{nrows\}[bigstructs]\{width\}[fixup]\{text\}}。其中：\texttt{nrows}设定所占用的行数；\texttt{bigstructs}为可选项，主要是在使用了 bigstruct 宏包时使用；\texttt{width}设定该栏文本的宽度，如果想让 LaTeX 自行决定文本的宽度，则用 * 即可；\texttt{fixup}为可选项，主要用来调整文本的垂直位置；\texttt{text}为所要排版的文本，可用“\ltxcmdname{\textbackslash}”来强制换行。
     \item 多列单元格：\ltxcmdname{multicolumn\{ncols\}\{align\}\{text\}}。其中：\texttt{ncols}设定所占用的列数；\texttt{align}是列选项参数，类似于\texttt{tabular}环境参数，如“\texttt{|c|}”；\texttt{text}为所要排版的文本。
 \end{enumerate}
-
-此外，\tabref{tab:samples:threepart}也使用了一个特殊的表格环境\texttt{threeparttable}来生成三线表，此环境主要用处是提供了在表格内加脚注的功能，同时也预定义了一些画各种粗细线条的命令，用于生成不同粗细的表格横线。
 
 %% 三线表及不规则单元格示例
 %   (1) 跨行混排
@@ -366,38 +445,7 @@ z = \left\{
   \end{threeparttable}
 \end{table}
 
-\texttt{longtable}环境用于排版跨页长表，与普通表格不太一样，不能当做浮动对象，当它附近有较多浮动表格对象时有可能导致表格出现的顺序和生成的编号顺序不一致，因此如无必要，建议尽量少用跨页长表，对于过长的表格应当进行适当的拆分。
-
-%% 跨页长表
-\begin{longtable}{|>{\tt}c|>{\kaishu}m{10cm}|}
-  \bicaption[跨页长表示例]{跨页长表示例及表格列选项参数说明}{Sample for the long table over multiple pages and description for the parameters} \label{tab:samples:longtable}\\
-    \hline \heiti 选项参数 & \tc{\heiti 说明} \\ \endfirsthead %第一页上的表头
-  %% 出现在续页上的标题有两种排版方法（建议使用bicaption排版）：
-  % (1) 续页表格的标题、页码不出现在表格目录中，标题和表格纵向间距较小（可自行调整），注意用“\thetable”输出表格编号
-  %\multicolumn{2}{c}{\bfseries\small \tablename\ \thetable\ {跨页长表示例及表格列选项参数说明（续表）}} \\
-  %\multicolumn{2}{c}{\bfseries\small Table\ \thetable\ {Sample for the long table over multiple pages and description for the parameters (continued)}} \\
-  % (2) 使用常规caption或bicaption排版，标题、页码将出现在表格目录中，若不想让续表出现在目录中，可将可选参数置空，如下例子所示
-  %\caption[跨页长表示例（续表）]{跨页长表示例及表格列选项参数说明（续表）} \\
-  \bicaption[]{跨页长表示例及表格列选项参数说明（续表）}{Sample for the long table over multiple pages and description for the parameters (continued)} \\
-    \hline \heiti 选项参数 & \tc{\heiti 说明} \\ \endhead %出现在续页上的表头
-    \hline         l      & 该列单元格内容左对齐 \\
-    \hline         c      & 该列单元格内容居中 \\
-    \hline         r      & 该列单元格内容右对齐 \\
-    \hline     p\{width\} & 将内容放进一个宽为\texttt{width}的段落盒，等价于\ltxcmdname{parbox[t]\{width\}} \\
-    \hline     @\{decl.\} & 删除两边列之间的空白，插入指定的文本，即大括号间的内容\texttt{decl.} \\
-    \hline     m\{width\} & 指定列宽为\texttt{width}，超出宽度的文字将自动换行，作用接近\ltxcmdname{parbox\{width\}} \\
-    \hline     b\{width\} & 相当于\ltxcmdname{parbox[b]\{width\}} \\
-    \hline     >\{decl.\} & 可在每个列选项字母之前使用，将大括号间的内容（\texttt{decl.}）插入到该列每个单元格内容之前，可以用它来控制每一列的文本格式 \\
-    \hline     <\{decl.\} & 可在每个列选项字母之后使用，将大括号间的内容（\texttt{decl.}）插入到该列每个单元格内容之后，配合“\texttt{>}”使用可方便地将该列每个单元格放置在一个环境中，比如数学环境 \\
-    \hline          |     & 插入一条竖线 \\
-    \hline     !\{decl.\} & 与\texttt{|}类似，只不过插入的不是竖线而是大括号间的内容（\texttt{decl.}）  \\
-    \hline
-\end{longtable}
-
-对于较宽的表格，同样可以使用“\ltxenvname{landscape}”环境按横排方式进行排版，如\tabref{tab:samples:landscapelongtable}
-所示，此表格也演示了在横排环境下的跨页长表排版。此处依然可以使用“\ltxcmdname{afterpage}”命令调整横排页的出现时机，
-但当遇到排版程序代码的“\ltxenvname{lstlisting}”环境（本质上类似“\ltxenvname{verbatim}”环境）时有很大几率出问题，
-有时甚至会导致横排页内容整体消失，因此，当横排页出现在\ltxenvname{lstlisting}附近时一般需要手工调整。
+此外，\tabref{tab:samples:threepart}也使用了一个特殊的表格环境\texttt{threeparttable}来生成三线表，此环境主要用处是提供了在表格内加脚注的功能，同时也预定义了一些画各种粗细线条的命令，用于生成不同粗细的表格横线。
 
 \afterpage{
 \begin{landscape}% 横排页环境
@@ -428,16 +476,10 @@ z = \left\{
 \end{landscape}
 }
 
-跨页表格的标题与一般表格不同，需额外提供续表标题，排版格式如下：
-{\linespread{1.2}
-\begin{verbatim}
-  \bicaption[短标题]{标题}[Short title]{Title} \label{...} \\
-    \hline 列名1 & 列名2 & ... \\ \endfirsthead %第一页上的表头
-  \bicaption[短标题（续表）]{标题（续表）}
-            [Short title (continued)]{Title (continued)} \\
-    \hline 列名1 & 列名2 & ... \\ \endhead %出现在续页上的表头
-\end{verbatim}}
-按上述方式排版，续表标题及页码将出现在表目录中，若不想要这样的效果，可以将续表标题“\ltxcmdname{bicaption}”命令的可选参数置空（注意要保留“\texttt{[]}”）。
+对于较宽的表格，同样可以使用“\ltxenvname{landscape}”环境按横排方式进行排版，如\tabref{tab:samples:landscapelongtable}
+所示，此表格也演示了在横排环境下的跨页长表排版。此处依然可以使用“\ltxcmdname{afterpage}”命令调整横排页的出现时机，
+但当遇到排版程序代码的“\ltxenvname{lstlisting}”环境（本质上类似“\ltxenvname{verbatim}”环境）时有很大几率出问题，
+有时甚至会导致横排页内容整体消失，因此，当横排页出现在\ltxenvname{lstlisting}附近时一般需要手工调整。
 
 \subsection{定理}
 定理，包括命题、引理、推论等的排版使用 \texttt{theorem}、\texttt{lemma}、\texttt{proposition} 等环境，每个定理可用可选参数指定一个别名。定理的证明放在 \texttt{proof} 环境中，证明结束标志为 \ltxcmdname{qedhere}。
